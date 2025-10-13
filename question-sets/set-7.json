@@ -1,0 +1,80 @@
+{
+  "theme": "Food & Cuisine",
+  "mainAnswer": "CULINARYARTS",
+  "difficulty": "easy",
+  "language": "EN",
+  "questions": [
+    {
+      "question": "What fermented dairy product popular in many cuisines is often eaten with fruit or used in sauces?",
+      "answer": "Yogurt",
+      "letterPosition": 8,
+      "letter": "Y"
+    },
+    {
+      "question": "What dairy product is made by curdling milk and pressing the curds?",
+      "answer": "Cheese",
+      "letterPosition": 1,
+      "letter": "C"
+    },
+    {
+      "question": "What fruit commonly used as a vegetable is the base of marinara sauce?",
+      "answer": "Tomato",
+      "letterPosition": 11,
+      "letter": "T"
+    },
+    {
+      "question": "What layered Italian pasta dish uses wide flat noodles, sauce, and cheese?",
+      "answer": "Lasagna",
+      "letterPosition": 3,
+      "letter": "L"
+    },
+    {
+      "question": "What creamy fruit is the main ingredient in guacamole?",
+      "answer": "Avocado",
+      "letterPosition": 9,
+      "letter": "A"
+    },
+    {
+      "question": "What Japanese dish consists of vinegared rice with seafood or vegetables?",
+      "answer": "Sushi",
+      "letterPosition": 2,
+      "letter": "U"
+    },
+    {
+      "question": "What Mexican sauce made from tomatoes, chili, onion, and cilantro is often served with tortilla chips?",
+      "answer": "Salsa",
+      "letterPosition": 12,
+      "letter": "S"
+    },
+    {
+      "question": "What long strands of dough are common in Asian cuisines and Italian pasta?",
+      "answer": "Noodles",
+      "letterPosition": 5,
+      "letter": "N"
+    },
+    {
+      "question": "What staple grain is used to make risotto and paella?",
+      "answer": "Rice",
+      "letterPosition": 10,
+      "letter": "R"
+    },
+    {
+      "question": "What orange stone fruit is often dried and used in jams?",
+      "answer": "Apricot",
+      "letterPosition": 6,
+      "letter": "A"
+    },
+    {
+      "question": "What aromatic herb is a key ingredient in pesto?",
+      "answer": "Basil",
+      "letterPosition": 4,
+      "letter": "I"
+    },
+    {
+      "question": "What sandwich features a ground beef patty served in a bun?",
+      "answer": "Hamburger",
+      "letterPosition": 7,
+      "letter": "R"
+    }
+  ]
+}

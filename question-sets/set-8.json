@@ -1,0 +1,80 @@
+{
+  "theme": "Space & Astronomy",
+  "mainAnswer": "ASTROPHYSICS",
+  "difficulty": "medium",
+  "language": "EN",
+  "questions": [
+    {
+      "question": "Which space telescope launched in 1990 dramatically improved observations of the cosmos?",
+      "answer": "Hubble",
+      "letterPosition": 7,
+      "letter": "H"
+    },
+    {
+      "question": "What is the explosive death of a massive star called?",
+      "answer": "Supernova",
+      "letterPosition": 2,
+      "letter": "S"
+    },
+    {
+      "question": "Which volcanic moon orbits Jupiter and is known for intense geological activity?",
+      "answer": "Io",
+      "letterPosition": 10,
+      "letter": "I"
+    },
+    {
+      "question": "Which planet is famously known as the Red Planet?",
+      "answer": "Mars",
+      "letterPosition": 4,
+      "letter": "R"
+    },
+    {
+      "question": "What term describes a vehicle designed for travel beyond Earth's atmosphere?",
+      "answer": "Spacecraft",
+      "letterPosition": 9,
+      "letter": "S"
+    },
+    {
+      "question": "What instrument is used to observe distant objects by collecting light?",
+      "answer": "Telescope",
+      "letterPosition": 3,
+      "letter": "T"
+    },
+    {
+      "question": "What is the nearest major galaxy to the Milky Way?",
+      "answer": "Andromeda",
+      "letterPosition": 1,
+      "letter": "A"
+    },
+    {
+      "question": "What stream of charged particles flows outward from the Sun?",
+      "answer": "Solar wind",
+      "letterPosition": 12,
+      "letter": "S"
+    },
+    {
+      "question": "What is the path of a planet around the Sun called?",
+      "answer": "Orbit",
+      "letterPosition": 5,
+      "letter": "O"
+    },
+    {
+      "question": "What word describes a large body that orbits a star?",
+      "answer": "Planet",
+      "letterPosition": 6,
+      "letter": "P"
+    },
+    {
+      "question": "A light-year is a measure of what?",
+      "answer": "Distance",
+      "letterPosition": 11,
+      "letter": "C"
+    },
+    {
+      "question": "What do we call a vast collection of stars, gas, and dust bound by gravity?",
+      "answer": "Galaxy",
+      "letterPosition": 8,
+      "letter": "Y"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "theme": "The Netherlands & Culture",
+  "mainAnswer": "DUTCHMASTERS",
+  "difficulty": "medium",
+  "language": "EN",
+  "questions": [
+    {
+      "question": "Which Dutch city is Europe's largest seaport?",
+      "answer": "Rotterdam",
+      "letterPosition": 9,
+      "letter": "T"
+    },
+    {
+      "question": "What traditional December holiday figure arrives by steamboat in Dutch folklore?",
+      "answer": "Sinterklaas",
+      "letterPosition": 12,
+      "letter": "S"
+    },
+    {
+      "question": "Which Dutch city is home to the Dom Tower?",
+      "answer": "Utrecht",
+      "letterPosition": 2,
+      "letter": "U"
+    },
+    {
+      "question": "Which Dutch painter created 'The Night Watch'?",
+      "answer": "Rembrandt",
+      "letterPosition": 6,
+      "letter": "M"
+    },
+    {
+      "question": "Which Dutch cheese shares its name with a city in South Holland?",
+      "answer": "Gouda",
+      "letterPosition": 7,
+      "letter": "A"
+    },
+    {
+      "question": "What traditional wooden footwear is associated with Dutch culture?",
+      "answer": "Clogs",
+      "letterPosition": 4,
+      "letter": "C"
+    },
+    {
+      "question": "Which city is the capital of the Netherlands?",
+      "answer": "Amsterdam",
+      "letterPosition": 1,
+      "letter": "D"
+    },
+    {
+      "question": "What Dutch treat consists of two thin waffles with caramel syrup in between?",
+      "answer": "Stroopwafel",
+      "letterPosition": 8,
+      "letter": "S"
+    },
+    {
+      "question": "What fish is eaten raw as 'Hollandse Nieuwe'?",
+      "answer": "Herring",
+      "letterPosition": 5,
+      "letter": "H"
+    },
+    {
+      "question": "What Amsterdam museum houses many works of the Dutch Masters?",
+      "answer": "Rijksmuseum",
+      "letterPosition": 11,
+      "letter": "R"
+    },
+    {
+      "question": "What flower is famously associated with the Dutch Golden Age and spring festivals?",
+      "answer": "Tulip",
+      "letterPosition": 3,
+      "letter": "T"
+    },
+    {
+      "question": "What Rotterdam-born humanist wrote 'In Praise of Folly'?",
+      "answer": "Erasmus",
+      "letterPosition": 10,
+      "letter": "E"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "theme": "Innovation & Future Tech",
+  "mainAnswer": "AUGMENTATION",
+  "difficulty": "hard",
+  "language": "EN",
+  "questions": [
+    {
+      "question": "What virtual replica of a physical system is used for simulation, monitoring, and predictive maintenance?",
+      "answer": "Digital twin",
+      "letterPosition": 10,
+      "letter": "I"
+    },
+    {
+      "question": "What single layer of carbon atoms arranged in a hexagonal lattice is known for exceptional strength and conductivity?",
+      "answer": "Graphene",
+      "letterPosition": 3,
+      "letter": "G"
+    },
+    {
+      "question": "What technology overlays digital information onto the real world through devices like smartphones or headsets?",
+      "answer": "Augmented reality",
+      "letterPosition": 1,
+      "letter": "A"
+    },
+    {
+      "question": "What field uses qubits, superposition, and interference to perform computations?",
+      "answer": "Quantum computing",
+      "letterPosition": 2,
+      "letter": "U"
+    },
+    {
+      "question": "What architecture processes data close to its source to reduce latency and bandwidth use?",
+      "answer": "Edge computing",
+      "letterPosition": 5,
+      "letter": "E"
+    },
+    {
+      "question": "What AI discipline enables systems to improve performance from data without explicit programming?",
+      "answer": "Machine learning",
+      "letterPosition": 4,
+      "letter": "M"
+    },
+    {
+      "question": "What field involves designing microscopic machines to operate at the nanoscale?",
+      "answer": "Nanorobotics",
+      "letterPosition": 6,
+      "letter": "N"
+    },
+    {
+      "question": "What technology allows operators to control robots or vehicles remotely in real time?",
+      "answer": "Teleoperation",
+      "letterPosition": 7,
+      "letter": "T"
+    },
+    {
+      "question": "What domain aims to create machines capable of tasks requiring human-like reasoning and perception?",
+      "answer": "Artificial intelligence",
+      "letterPosition": 8,
+      "letter": "A"
+    },
+    {
+      "question": "What term refers to the network of physical devices embedded with sensors and connectivity?",
+      "answer": "Internet of Things",
+      "letterPosition": 9,
+      "letter": "T"
+    },
+    {
+      "question": "What field focuses on the design, construction, and operation of autonomous machines?",
+      "answer": "Robotics",
+      "letterPosition": 11,
+      "letter": "O"
+    },
+    {
+      "question": "What security technique uses phenomena like quantum key distribution to secure communication?",
+      "answer": "Quantum encryption",
+      "letterPosition": 12,
+      "letter": "N"
+    }
+  ]
+}

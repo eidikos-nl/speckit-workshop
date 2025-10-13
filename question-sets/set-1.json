@@ -1,0 +1,80 @@
+{
+  "theme": "Seasons & Nature",
+  "mainAnswer": "BIODIVERSITY",
+  "difficulty": "medium",
+  "language": "EN",
+  "questions": [
+    {
+      "question": "What term describes a community of organisms and their environment?",
+      "answer": "Ecosystem",
+      "letterPosition": 7,
+      "letter": "E"
+    },
+    {
+      "question": "Which pollinating insect is known for its fuzzy body and loud hum?",
+      "answer": "Bumblebee",
+      "letterPosition": 1,
+      "letter": "B"
+    },
+    {
+      "question": "Which biome is characterized by permafrost and low vegetation in polar regions?",
+      "answer": "Tundra",
+      "letterPosition": 11,
+      "letter": "T"
+    },
+    {
+      "question": "What flower shares its name with the colored part of the eye?",
+      "answer": "Iris",
+      "letterPosition": 5,
+      "letter": "I"
+    },
+    {
+      "question": "What is the term for the longest or shortest day of the year?",
+      "answer": "Solstice",
+      "letterPosition": 9,
+      "letter": "S"
+    },
+    {
+      "question": "Which gas is produced by plants during photosynthesis?",
+      "answer": "Oxygen",
+      "letterPosition": 3,
+      "letter": "O"
+    },
+    {
+      "question": "Which U.S. national park in California is famous for granite cliffs like El Capitan?",
+      "answer": "Yosemite",
+      "letterPosition": 12,
+      "letter": "Y"
+    },
+    {
+      "question": "What is the term for trees that shed their leaves annually?",
+      "answer": "Deciduous",
+      "letterPosition": 4,
+      "letter": "D"
+    },
+    {
+      "question": "What is the class of animals that have three-part bodies and six legs?",
+      "answer": "Insects",
+      "letterPosition": 2,
+      "letter": "I"
+    },
+    {
+      "question": "What term describes a non-native species that spreads and harms ecosystems?",
+      "answer": "Invasive",
+      "letterPosition": 10,
+      "letter": "I"
+    },
+    {
+      "question": "What is the name for a mountain that can erupt with lava?",
+      "answer": "Volcano",
+      "letterPosition": 6,
+      "letter": "V"
+    },
+    {
+      "question": "What is the dense, biodiverse forest found in tropical regions called?",
+      "answer": "Rainforest",
+      "letterPosition": 8,
+      "letter": "R"
+    }
+  ]
+}

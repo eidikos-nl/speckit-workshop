@@ -1,0 +1,80 @@
+{
+  "theme": "Science & Technology",
+  "mainAnswer": "INTELLIGENCE",
+  "difficulty": "easy",
+  "language": "EN",
+  "questions": [
+    {
+      "question": "What instrument is used to magnify tiny objects like cells?",
+      "answer": "Microscope",
+      "letterPosition": 7,
+      "letter": "I"
+    },
+    {
+      "question": "What global network connects computers worldwide?",
+      "answer": "Internet",
+      "letterPosition": 1,
+      "letter": "I"
+    },
+    {
+      "question": "What type of cell transmits signals in the nervous system?",
+      "answer": "Neuron",
+      "letterPosition": 10,
+      "letter": "N"
+    },
+    {
+      "question": "What force pulls objects toward each other and keeps planets in orbit?",
+      "answer": "Gravity",
+      "letterPosition": 3,
+      "letter": "T"
+    },
+    {
+      "question": "What biological catalysts speed up chemical reactions?",
+      "answer": "Enzymes",
+      "letterPosition": 12,
+      "letter": "E"
+    },
+    {
+      "question": "What device emits a narrow, focused beam of light for cutting or scanning?",
+      "answer": "Laser",
+      "letterPosition": 5,
+      "letter": "L"
+    },
+    {
+      "question": "What gas makes up about 78% of Earth's atmosphere?",
+      "answer": "Nitrogen",
+      "letterPosition": 2,
+      "letter": "N"
+    },
+    {
+      "question": "In physics, what is the ability to do work?",
+      "answer": "Energy",
+      "letterPosition": 9,
+      "letter": "E"
+    },
+    {
+      "question": "What machine processes data using binary and executes programs?",
+      "answer": "Computer",
+      "letterPosition": 11,
+      "letter": "C"
+    },
+    {
+      "question": "What subatomic particle carries a negative electric charge?",
+      "answer": "Electron",
+      "letterPosition": 4,
+      "letter": "E"
+    },
+    {
+      "question": "What is the complete set of genes or genetic material of an organism?",
+      "answer": "Genome",
+      "letterPosition": 8,
+      "letter": "G"
+    },
+    {
+      "question": "What transparent optical component focuses light in cameras and eyes?",
+      "answer": "Lens",
+      "letterPosition": 6,
+      "letter": "L"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "theme": "Health & Medicine",
+  "mainAnswer": "VACCINATIONS",
+  "difficulty": "easy",
+  "language": "EN",
+  "questions": [
+    {
+      "question": "What hormone produced by the pancreas helps regulate blood sugar levels?",
+      "answer": "Insulin",
+      "letterPosition": 5,
+      "letter": "I"
+    },
+    {
+      "question": "What microscopic agent replicates only inside the cells of a host organism?",
+      "answer": "Virus",
+      "letterPosition": 1,
+      "letter": "V"
+    },
+    {
+      "question": "What gas is carried by hemoglobin from the lungs to body tissues?",
+      "answer": "Oxygen",
+      "letterPosition": 10,
+      "letter": "O"
+    },
+    {
+      "question": "Which branch of medicine deals with disorders of the heart and blood vessels?",
+      "answer": "Cardiology",
+      "letterPosition": 3,
+      "letter": "C"
+    },
+    {
+      "question": "What treatment aims to relieve or heal a disorder through methods like counseling or exercise?",
+      "answer": "Therapy",
+      "letterPosition": 8,
+      "letter": "T"
+    },
+    {
+      "question": "What instrument is used by a doctor to listen to internal body sounds like the heartbeat?",
+      "answer": "Stethoscope",
+      "letterPosition": 12,
+      "letter": "S"
+    },
+    {
+      "question": "What biological science studies the structure of organisms and their parts?",
+      "answer": "Anatomy",
+      "letterPosition": 2,
+      "letter": "A"
+    },
+    {
+      "question": "What term describes the process by which organisms take in and utilize food for growth and health?",
+      "answer": "Nutrition",
+      "letterPosition": 11,
+      "letter": "N"
+    },
+    {
+      "question": "What condition involving low levels of hemoglobin or red blood cells can cause fatigue and weakness?",
+      "answer": "Anemia",
+      "letterPosition": 7,
+      "letter": "A"
+    },
+    {
+      "question": "What general term refers to diseases characterized by uncontrolled cell growth and spread?",
+      "answer": "Cancer",
+      "letterPosition": 4,
+      "letter": "C"
+    },
+    {
+      "question": "What is the body's ability to resist infection called?",
+      "answer": "Immunity",
+      "letterPosition": 9,
+      "letter": "I"
+    },
+    {
+      "question": "What healthcare professional provides patient care and support under a doctor's supervision?",
+      "answer": "Nurse",
+      "letterPosition": 6,
+      "letter": "N"
+    }
+  ]
+}

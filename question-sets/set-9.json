@@ -1,0 +1,80 @@
+{
+  "theme": "Music & Art",
+  "mainAnswer": "INSTRUMENTAL",
+  "difficulty": "hard",
+  "language": "EN",
+  "questions": [
+    {
+      "question": "Which industrial rock band is fronted by Trent Reznor?",
+      "answer": "Nine Inch Nails",
+      "letterPosition": 9,
+      "letter": "N"
+    },
+    {
+      "question": "Which Dutch painter created 'The Night Watch'?",
+      "answer": "Rembrandt",
+      "letterPosition": 5,
+      "letter": "R"
+    },
+    {
+      "question": "Which 19th-century art movement is associated with Monet and Renoir?",
+      "answer": "Impressionism",
+      "letterPosition": 1,
+      "letter": "I"
+    },
+    {
+      "question": "Which Renaissance polymath painted the 'Mona Lisa'?",
+      "answer": "Leonardo da Vinci",
+      "letterPosition": 12,
+      "letter": "L"
+    },
+    {
+      "question": "What contrapuntal composition technique used by Bach features interweaving voices?",
+      "answer": "Fugue",
+      "letterPosition": 6,
+      "letter": "U"
+    },
+    {
+      "question": "Which Vatican chapel features Michelangelo's ceiling frescoes?",
+      "answer": "Sistine Chapel",
+      "letterPosition": 3,
+      "letter": "S"
+    },
+    {
+      "question": "In music, what term denotes the speed of a piece?",
+      "answer": "Tempo",
+      "letterPosition": 10,
+      "letter": "T"
+    },
+    {
+      "question": "What device keeps a musician's tempo with regular clicks?",
+      "answer": "Metronome",
+      "letterPosition": 7,
+      "letter": "M"
+    },
+    {
+      "question": "Which American grunge band released the album 'Nevermind'?",
+      "answer": "Nirvana",
+      "letterPosition": 2,
+      "letter": "N"
+    },
+    {
+      "question": "What is the operatic solo piece that highlights a singer called?",
+      "answer": "Aria",
+      "letterPosition": 11,
+      "letter": "A"
+    },
+    {
+      "question": "Which Russian composer wrote the ballets 'Swan Lake' and 'The Nutcracker'?",
+      "answer": "Tchaikovsky",
+      "letterPosition": 4,
+      "letter": "T"
+    },
+    {
+      "question": "What stand is used by painters to hold a canvas upright?",
+      "answer": "Easel",
+      "letterPosition": 8,
+      "letter": "E"
+    }
+  ]
+}

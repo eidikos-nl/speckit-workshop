@@ -1,0 +1,80 @@
+{
+  "theme": "Sports & Athletics",
+  "mainAnswer": "SPEEDSKATING",
+  "difficulty": "hard",
+  "language": "EN",
+  "questions": [
+    {
+      "question": "Which Japanese martial art emphasizes striking techniques like kata and kumite?",
+      "answer": "Karate",
+      "letterPosition": 7,
+      "letter": "K"
+    },
+    {
+      "question": "What modern event combines fencing, swimming, equestrian, shooting, and running?",
+      "answer": "Pentathlon",
+      "letterPosition": 2,
+      "letter": "P"
+    },
+    {
+      "question": "What long-distance footrace covers 42.195 kilometers?",
+      "answer": "Marathon",
+      "letterPosition": 11,
+      "letter": "N"
+    },
+    {
+      "question": "What ten-event track and field contest often crowns the 'world's greatest athlete'?",
+      "answer": "Decathlon",
+      "letterPosition": 5,
+      "letter": "D"
+    },
+    {
+      "question": "Which sport is often called 'the beautiful game'?",
+      "answer": "Soccer",
+      "letterPosition": 1,
+      "letter": "S"
+    },
+    {
+      "question": "What shapes appear on the Olympic flag?",
+      "answer": "Rings",
+      "letterPosition": 10,
+      "letter": "I"
+    },
+    {
+      "question": "In which sport are the Grand Slam tournaments Wimbledon and the US Open?",
+      "answer": "Tennis",
+      "letterPosition": 3,
+      "letter": "E"
+    },
+    {
+      "question": "Which winter sport involves sliding stones toward a target on ice?",
+      "answer": "Curling",
+      "letterPosition": 12,
+      "letter": "G"
+    },
+    {
+      "question": "What is the championship game of the NFL called?",
+      "answer": "Super Bowl",
+      "letterPosition": 6,
+      "letter": "S"
+    },
+    {
+      "question": "Which track event features barriers and a water jump?",
+      "answer": "Steeplechase",
+      "letterPosition": 8,
+      "letter": "A"
+    },
+    {
+      "question": "Which sport includes apparatus like the pommel horse and rings?",
+      "answer": "Gymnastics",
+      "letterPosition": 9,
+      "letter": "T"
+    },
+    {
+      "question": "Which swimming stroke shares its name with a style of rap?",
+      "answer": "Freestyle",
+      "letterPosition": 4,
+      "letter": "E"
+    }
+  ]
+}

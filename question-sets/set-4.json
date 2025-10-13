@@ -1,0 +1,80 @@
+{
+  "theme": "Film & Literature",
+  "mainAnswer": "SCREENWRITER",
+  "difficulty": "hard",
+  "language": "EN",
+  "questions": [
+    {
+      "question": "Who directed 'Citizen Kane'?",
+      "answer": "Welles",
+      "letterPosition": 7,
+      "letter": "W"
+    },
+    {
+      "question": "Which author created 'The Chronicles of Narnia'?",
+      "answer": "C. S. Lewis",
+      "letterPosition": 2,
+      "letter": "C"
+    },
+    {
+      "question": "Who wrote the modernist poem 'The Waste Land'?",
+      "answer": "Eliot",
+      "letterPosition": 11,
+      "letter": "E"
+    },
+    {
+      "question": "What is the term for a book's ending section that ties up loose ends?",
+      "answer": "Epilogue",
+      "letterPosition": 5,
+      "letter": "E"
+    },
+    {
+      "question": "Which ancient Greek epic recounts the Trojan War?",
+      "answer": "Iliad",
+      "letterPosition": 9,
+      "letter": "I"
+    },
+    {
+      "question": "Who wrote 'Hamlet'?",
+      "answer": "Shakespeare",
+      "letterPosition": 1,
+      "letter": "S"
+    },
+    {
+      "question": "Who directed 'Pulp Fiction'?",
+      "answer": "Tarantino",
+      "letterPosition": 10,
+      "letter": "T"
+    },
+    {
+      "question": "Who wrote the dystopian novel 'Nineteen Eighty-Four'?",
+      "answer": "George Orwell",
+      "letterPosition": 12,
+      "letter": "R"
+    },
+    {
+      "question": "Who wrote the Harry Potter series?",
+      "answer": "Rowling",
+      "letterPosition": 3,
+      "letter": "R"
+    },
+    {
+      "question": "Which director is known for 'Inception' and 'Dunkirk'?",
+      "answer": "Nolan",
+      "letterPosition": 6,
+      "letter": "N"
+    },
+    {
+      "question": "What annual U.S. prize honors achievements in journalism and letters?",
+      "answer": "Pulitzer",
+      "letterPosition": 8,
+      "letter": "R"
+    },
+    {
+      "question": "What is a set of books published in sequence called?",
+      "answer": "Series",
+      "letterPosition": 4,
+      "letter": "E"
+    }
+  ]
+}

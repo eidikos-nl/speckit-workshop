@@ -1,0 +1,80 @@
+{
+  "theme": "History & Politics",
+  "mainAnswer": "CONSTITUTION",
+  "difficulty": "medium",
+  "language": "EN",
+  "questions": [
+    {
+      "question": "What international organization founded in 1945 aims to promote global peace and cooperation?",
+      "answer": "United Nations",
+      "letterPosition": 8,
+      "letter": "U"
+    },
+    {
+      "question": "What 1919 agreement formally ended World War I between Germany and the Allies?",
+      "answer": "Treaty of Versailles",
+      "letterPosition": 5,
+      "letter": "T"
+    },
+    {
+      "question": "Which French leader became Emperor and was later exiled to Elba?",
+      "answer": "Napoleon",
+      "letterPosition": 12,
+      "letter": "N"
+    },
+    {
+      "question": "What transatlantic military alliance was formed in 1949?",
+      "answer": "NATO",
+      "letterPosition": 3,
+      "letter": "N"
+    },
+    {
+      "question": "Which Pacific island was the site of a pivotal WWII battle known for the iconic flag-raising photo?",
+      "answer": "Iwo Jima",
+      "letterPosition": 10,
+      "letter": "I"
+    },
+    {
+      "question": "Which ancient Andean civilization built Machu Picchu?",
+      "answer": "Inca",
+      "letterPosition": 1,
+      "letter": "C"
+    },
+    {
+      "question": "Who was the first female Prime Minister of the United Kingdom?",
+      "answer": "Margaret Thatcher",
+      "letterPosition": 7,
+      "letter": "T"
+    },
+    {
+      "question": "What 1917 event in Russia brought the Bolsheviks to power?",
+      "answer": "October Revolution",
+      "letterPosition": 2,
+      "letter": "O"
+    },
+    {
+      "question": "Which 1943 meeting of Allied leaders took place in Iran to coordinate WWII strategy?",
+      "answer": "Tehran Conference",
+      "letterPosition": 9,
+      "letter": "T"
+    },
+    {
+      "question": "Which Islamic empire ruled much of Southeast Europe, Western Asia, and North Africa for centuries?",
+      "answer": "Ottoman Empire",
+      "letterPosition": 11,
+      "letter": "O"
+    },
+    {
+      "question": "What term describes the right to vote in political elections?",
+      "answer": "Suffrage",
+      "letterPosition": 4,
+      "letter": "S"
+    },
+    {
+      "question": "Who led India to independence through nonviolent resistance?",
+      "answer": "Gandhi",
+      "letterPosition": 6,
+      "letter": "I"
+    }
+  ]
+}

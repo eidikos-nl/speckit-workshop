@@ -1,0 +1,80 @@
+{
+  "theme": "Travel & Geography",
+  "mainAnswer": "DESTINATIONS",
+  "difficulty": "medium",
+  "language": "EN",
+  "questions": [
+    {
+      "question": "What is the world's largest hot desert?",
+      "answer": "Sahara",
+      "letterPosition": 3,
+      "letter": "S"
+    },
+    {
+      "question": "What city is the capital of Norway?",
+      "answer": "Oslo",
+      "letterPosition": 10,
+      "letter": "O"
+    },
+    {
+      "question": "Which European river flows through Vienna and Budapest?",
+      "answer": "Danube",
+      "letterPosition": 1,
+      "letter": "D"
+    },
+    {
+      "question": "Which Asian mountain range includes Mount Everest?",
+      "answer": "Himalayas",
+      "letterPosition": 5,
+      "letter": "I"
+    },
+    {
+      "question": "Which river flows through London?",
+      "answer": "Thames",
+      "letterPosition": 12,
+      "letter": "S"
+    },
+    {
+      "question": "Which country between India and China has Kathmandu as its capital?",
+      "answer": "Nepal",
+      "letterPosition": 6,
+      "letter": "N"
+    },
+    {
+      "question": "What mountain range spans parts of France, Switzerland, Italy, and Austria?",
+      "answer": "Alps",
+      "letterPosition": 7,
+      "letter": "A"
+    },
+    {
+      "question": "Which South American mountain chain runs along the continent's western edge?",
+      "answer": "Andes",
+      "letterPosition": 11,
+      "letter": "N"
+    },
+    {
+      "question": "What ivory-white marble mausoleum in Agra is a UNESCO World Heritage Site?",
+      "answer": "Taj Mahal",
+      "letterPosition": 4,
+      "letter": "T"
+    },
+    {
+      "question": "Which high plateau region of China includes the city of Lhasa?",
+      "answer": "Tibet",
+      "letterPosition": 8,
+      "letter": "T"
+    },
+    {
+      "question": "Which Horn of Africa nation has Addis Ababa as its capital?",
+      "answer": "Ethiopia",
+      "letterPosition": 2,
+      "letter": "E"
+    },
+    {
+      "question": "Which Pacific island country is known for its coral reefs and the Mamanuca Islands?",
+      "answer": "Fiji",
+      "letterPosition": 9,
+      "letter": "I"
+    }
+  ]
+}

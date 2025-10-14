@@ -1,5 +1,5 @@
 <!--
-Sync Impact Report:
+Sync Impact Report (v1.0.0):
 - Version change: INITIAL → 1.0.0
 - Added sections:
   * Core Principles: SOLID Principles for Code Quality
@@ -12,6 +12,20 @@ Sync Impact Report:
   ✅ tasks-template.md (reviewed - Testing guidance aligns)
 - Follow-up TODOs: None
 - Ratification date set to today (2025-10-14) as initial version
+
+Sync Impact Report (v1.1.0):
+- Version change: 1.0.0 → 1.1.0
+- Added section: Testing Standards - E2E Test Selector Strategy (data-testid requirement)
+- Rationale: During implementation of 001-initialize-game-i, discovered that using ARIA labels
+  for test selectors caused test failures when accessibility attributes changed. Data-testid
+  attributes provide stable, implementation-independent selectors.
+- Templates requiring updates:
+  ⚠️ plan-template.md (should include data-testid guidance in testing section)
+  ⚠️ tasks-template.md (E2E test tasks should mention data-testid requirements)
+- Follow-up TODOs:
+  * Update plan and spec templates to include data-testid best practices
+  * Consider adding automated linting to enforce data-testid on interactive elements
+- Amendment date: 2025-10-14
 -->
 
 # Spec-Kit Workshop Project Constitution
@@ -93,6 +107,16 @@ Sync Impact Report:
 - E2E tests MUST run against a realistic environment (or production-like staging)
 - E2E tests MUST be automated and included in the CI/CD pipeline
 - E2E test failures MUST block releases
+
+**E2E Test Selector Strategy**: E2E tests MUST use `data-testid` attributes for locating interactive elements rather than relying on text content, ARIA labels, or CSS selectors.
+
+**Rationale**: Data-testid attributes provide stable, implementation-independent test selectors that don't break when UI text, styling, or accessibility attributes change. This reduces test brittleness and maintenance burden.
+
+**Implementation Requirements**:
+- All interactive elements (buttons, inputs, clickable areas) MUST have unique `data-testid` attributes
+- E2E tests MUST prefer `getByTestId()` over `getByRole()`, `getByText()`, or CSS selectors
+- Test IDs MUST be descriptive and follow kebab-case convention (e.g., `start-game-button`, `theme-display`)
+- ARIA labels and accessibility attributes remain required but should not be used for test selection
 
 **Test-First Development (CONDITIONAL)**: When explicitly specified in a feature specification, tests MUST be written before implementation (Test-Driven Development).
 
@@ -193,4 +217,4 @@ All feature specifications, plans, and tasks MUST include a "Constitution Check"
 
 This constitution is a living document. As the project evolves, principles should be refined based on practical experience. However, changes MUST be deliberate, documented, and propagated to all dependent templates and documentation.
 
-**Version**: 1.0.0 | **Ratified**: 2025-10-14 | **Last Amended**: 2025-10-14
+**Version**: 1.1.0 | **Ratified**: 2025-10-14 | **Last Amended**: 2025-10-14

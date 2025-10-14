@@ -2,7 +2,7 @@
 
 **Feature Branch**: `001-initialize-game-i`
 **Created**: 2025-10-14
-**Status**: Draft
+**Status**: ✅ Implemented (2025-10-14)
 **Input**: User description: "Initialize game. I am building "2 to twelve", a game where the objective is to guess a 12-letter word within 12 minutes by answering 12 general knowledge questions which will provide individual letters to the player which still need to be ordered correctly to spell out the word. In this initial feature we simply want to be able to start a game, and stop a game. I imagine a single button that allows me to start a new game which picks a question-set randomly. All it should display now after clicking the button is the selected set's theme."
 
 ## User Scenarios & Testing *(mandatory)*
@@ -78,8 +78,8 @@ A player who has started a game wants to end the current session before completi
 
 ## Assumptions
 
-- Question sets already exist or will be provided as part of the initial implementation (at least 2-3 sets for testing random selection)
-- The 12 questions within each set and the target 12-letter word exist but are not needed for this initial feature
+- Question sets are loaded dynamically from the `question-sets/` directory via API endpoint (12 sets currently available)
+- The 12 questions within each set and the target 12-letter word exist in the JSON files but question answering is not needed for this initial feature
 - The game interface is a single-screen application (web or mobile) where the start button and theme display are visible
 - No user authentication or game history tracking is required at this stage
 - The "12 minutes" time limit is not implemented in this feature; only initialization and termination are in scope

@@ -81,6 +81,7 @@ This feature implements the core game initialization flow for "2 to Twelve", a w
 - User Story 2 (Stop Game) → Playwright E2E test
 - Edge cases (rapid clicks, no question sets) → Playwright E2E tests
 - Target: 100% user story coverage
+- **Test Selectors**: All E2E tests use `data-testid` attributes for stable, implementation-independent element location
 
 **Test-First Development**: ❌ **NOT REQUIRED** (following standard test-after approach)
 
@@ -147,6 +148,7 @@ This feature implements the core game initialization flow for "2 to Twelve", a w
 - E2E test cases mapped to all user stories
 - Playwright configuration documented in quickstart.md
 - Edge cases included in test plan
+- **Test Selector Strategy**: Using `data-testid` attributes (start-game-button, stop-game-button, theme-display) for stable test selectors independent of UI text or ARIA labels
 
 **Test-First Development**: ❌ **NOT REQUIRED** (maintaining standard test-after approach)
 

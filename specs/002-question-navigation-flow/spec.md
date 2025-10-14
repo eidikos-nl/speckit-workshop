@@ -1,7 +1,7 @@
 # Feature Specification: Question Navigation Flow for "2 to Twelve"
 
 **Feature Branch**: `002-question-navigation-flow`
-**Created**: 2025-10-14
+**Created**:  ✅ Implemented (2026-10-14)
 **Status**: Draft
 **Input**: User description: "question navigation flow. The player should be able to navigate through the questions that are selected freely. The player should both be able to easily select a certain question as well as being able to navigate to the next or previous question. The UI should always: Show the current question (including question number), Show squares for each question that are clickable to navigate directly to that question (in future this square will contain the letter when the question was answered correctly), Show an input field that allows the player to provide an answer (non functional for now) with a button next to it to allow the answer to be verified, Show navigation chevrons to navigate to the next or previous question. When on the first question you cannot navigate back. When on the last question you cannot navigate forward. In short: Always a single question is shown, the user can either use the chevrons to navigate to the next or previous question, or directly jump to it by clicking on the square."
 

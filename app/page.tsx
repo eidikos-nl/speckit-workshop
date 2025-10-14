@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { GameSession, QuestionSet } from '@/lib/types';
 import { selectRandomQuestionSet } from '@/lib/gameLogic';
 import { loadQuestionSets } from '@/lib/questionSets';
+import { GameContainer } from './components/GameContainer';
 
 export default function Home() {
   // T027: GameSession state management
@@ -75,7 +76,7 @@ export default function Home() {
   return (
     // T031: Responsive layout with mobile-first styling
     <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-8">
-      <div className="w-full max-w-2xl space-y-8">
+      <div className="w-full max-w-4xl space-y-8">
         {/* Header */}
         <div className="text-center space-y-2">
           <h1 className="text-4xl sm:text-5xl font-bold text-game-text">
@@ -113,36 +114,11 @@ export default function Home() {
               )}
             </div>
           ) : (
-            // Active game state - show theme
-            // T030: Theme display with data-testid (visible when isActive)
-            <div className="text-center space-y-4">
-              <div className="space-y-2">
-                <h2 className="text-2xl font-semibold text-gray-700">
-                  Theme
-                </h2>
-                <div
-                  data-testid="theme-display"
-                  className="text-3xl sm:text-4xl font-bold text-game-primary"
-                >
-                  {gameSession.selectedQuestionSet?.theme}
-                </div>
-              </div>
-              <p className="text-gray-600">
-                Target word has 12 letters. Answer questions to reveal them!
-              </p>
-              <p className="text-sm text-gray-500">
-                (Full game functionality coming soon)
-              </p>
-              {/* T038: Stop Game button with btn-danger class (visible only when isActive) */}
-              <button
-                onClick={handleStopGame}
-                className="btn-danger mt-4"
-                aria-label="Stop the current game session"
-                data-testid="stop-game-button"
-              >
-                Stop Game
-              </button>
-            </div>
+            // Active game state - show GameContainer with navigation
+            <GameContainer
+              gameSession={gameSession}
+              onStopGame={handleStopGame}
+            />
           )}
 
           {/* Error display */}

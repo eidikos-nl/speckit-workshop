@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { GameSession } from '@/lib/types';
+import { GameSession, CollectedLetters } from '@/lib/types';
 import { canNavigateNext, canNavigatePrevious } from '@/lib/navigationLogic';
 import { validateAnswer } from '@/lib/validationLogic';
 import { QuestionDisplay } from './QuestionDisplay';
@@ -23,6 +23,11 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
   // T006: Track which questions have been correctly answered
   // Uses Set<string> where each element is a question ID
   const [answeredQuestions, setAnsweredQuestions] = useState<Set<string>>(new Set());
+
+  // T009: Manage collected letters state - tracks letters revealed by correct answers
+  const [collectedLetters, setCollectedLetters] = useState<CollectedLetters>(
+    gameSession.collectedLetters
+  );
 
   // Guard: Only render if game is active with a valid question set
   if (!gameSession.isActive || !gameSession.selectedQuestionSet) {
@@ -61,11 +66,19 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
   // Validates the submitted answer against the correct answer
   // Returns true if correct, false if incorrect
   // Updates answeredQuestions state if answer is correct
+  // T008: Collects letter when answer is correct
   const handleAnswerSubmit = (answer: string): boolean => {
     const validationResult = validateAnswer(answer, currentQuestion.answer);
     if (validationResult.isCorrect) {
       // Add question ID to answered questions set
       setAnsweredQuestions(prev => new Set(prev).add(currentQuestion.id));
+      // T008: Update collected letters with the revealed letter for this question
+      // Question index is 0-based, but letter positions are 1-12
+      const questionPosition = currentQuestionIndex + 1;
+      setCollectedLetters(prev => ({
+        ...prev,
+        [questionPosition]: currentQuestion.revealedLetter,
+      }));
     }
     return validationResult.isCorrect;
   };
@@ -145,12 +158,14 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
 
       {/* T034: QuestionGrid integrated with onSelectQuestion handler - moved below answer input */}
       {/* T013: Pass answeredQuestions state to QuestionGrid */}
+      {/* T011: Pass collectedLetters to QuestionGrid for display */}
       <QuestionGrid
         currentQuestionIndex={currentQuestionIndex}
         totalQuestions={totalQuestions}
         onSelectQuestion={handleSelectQuestion}
         answeredQuestions={answeredQuestions}
         questions={questions}
+        collectedLetters={collectedLetters}
       />
 
       {/* Stop Game Button */}

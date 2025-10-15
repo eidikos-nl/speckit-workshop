@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Question } from '@/lib/types';
+import { Question, CollectedLetters } from '@/lib/types';
+import { getDisplayLetter, isAnsweredCorrectly } from '@/lib/validationLogic';
 
 interface QuestionGridProps {
   /** Current question index (0-11) for highlighting */
@@ -12,11 +13,14 @@ interface QuestionGridProps {
   /** Callback when user clicks a square */
   onSelectQuestion: (index: number) => void;
 
-  /** T013: Set of answered question IDs for visual feedback */
+  /** T013: Set of answered question IDs for visual feedback (kept for backwards compatibility) */
   answeredQuestions?: Set<string>;
 
-  /** The array of questions for checking answered status */
+  /** The array of questions for checking answered status (kept for backwards compatibility) */
   questions?: Question[];
+
+  /** T011: Collection of revealed letters for each question position (1-12) */
+  collectedLetters?: CollectedLetters;
 }
 
 /**
@@ -29,8 +33,11 @@ export function QuestionGrid({
   currentQuestionIndex,
   totalQuestions,
   onSelectQuestion,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   answeredQuestions = new Set(),
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   questions = [],
+  collectedLetters = {},
 }: QuestionGridProps) {
   return (
     <div className="py-6" role="navigation" aria-label="Revealed letters grid">
@@ -52,10 +59,10 @@ export function QuestionGrid({
           const isActive = index === currentQuestionIndex;
           const displayNumber = index + 1; // 1-indexed for aria-label
 
-          // T014: Check if this question has been answered correctly
-          // Get the question ID from the questions array at this index
-          const question = questions?.[index];
-          const isAnswered = question ? answeredQuestions.has(question.id) : false;
+          // T011: Get display letter - either the collected letter or "." for unanswered
+          const displayLetter = getDisplayLetter(displayNumber, collectedLetters);
+          // T013: Check if answered using collected letters (same as isAnswered, but from collected letters)
+          const isLetterCollected = isAnsweredCorrectly(displayNumber, collectedLetters);
 
           return (
             <button
@@ -65,8 +72,8 @@ export function QuestionGrid({
               aria-label={`Position ${displayNumber} - ${
                 isActive
                   ? 'current question'
-                  : isAnswered
-                    ? 'answered - click to review'
+                  : isLetterCollected
+                    ? `answered with letter ${displayLetter} - click to review`
                     : 'click to navigate to this question'
               }`}
               aria-current={isActive ? 'true' : 'false'}
@@ -80,20 +87,21 @@ export function QuestionGrid({
                 {
                   // T014: Answered state - green background with success animation
                   // Shows green even if this is the current question
-                  'bg-green-500 border-green-600 border-2 text-white shadow-lg animate-success-pulse': isAnswered,
-                  'focus:ring-green-500': isAnswered,
+                  'bg-green-500 border-green-600 border-2 text-white shadow-lg animate-success-pulse': isLetterCollected,
+                  'focus:ring-green-500': isLetterCollected,
 
                   // Active state (non-answered) - highlighted to show current position
-                  'bg-game-primary text-white shadow-lg scale-105 ring-2 ring-game-primary ring-offset-2': isActive && !isAnswered,
-                  'focus:ring-game-primary': isActive && !isAnswered,
+                  'bg-game-primary text-white shadow-lg scale-105 ring-2 ring-game-primary ring-offset-2': isActive && !isLetterCollected,
+                  'focus:ring-game-primary': isActive && !isLetterCollected,
 
-                  // Inactive state - empty blocks for future letters
-                  'bg-gray-100 border-2 border-gray-300 text-gray-400 hover:bg-gray-200 hover:border-gray-400': !isAnswered && !isActive,
-                  'focus:ring-gray-400': !isAnswered && !isActive,
+                  // Inactive state - empty blocks with periods for unanswered
+                  'bg-white border-2 border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400': !isLetterCollected && !isActive,
+                  'focus:ring-gray-400': !isLetterCollected && !isActive,
                 }
               )}
             >
-              {/* Empty for now - will show revealed letters in future */}
+              {/* T011: Display the letter or period */}
+              <span>{displayLetter}</span>
             </button>
           );
         })}

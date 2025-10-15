@@ -1,4 +1,11 @@
-import { normalizeAnswer, validateAnswer, AnswerValidationResult } from '@/lib/validationLogic';
+import {
+  normalizeAnswer,
+  validateAnswer,
+  AnswerValidationResult,
+  getDisplayLetter,
+  isAnsweredCorrectly,
+} from '@/lib/validationLogic';
+import { CollectedLetters } from '@/lib/types';
 
 /**
  * Unit tests for validation logic
@@ -293,6 +300,298 @@ describe('validateAnswer', () => {
       const end = performance.now();
       // Should still be sub-millisecond
       expect(end - start).toBeLessThan(10);
+    });
+  });
+});
+
+/**
+ * Unit tests for letter collection display helpers
+ * Tests getDisplayLetter and isAnsweredCorrectly functions
+ */
+
+describe('getDisplayLetter', () => {
+  describe('Displaying collected letters', () => {
+    it('returns collected letter when letter exists', () => {
+      const letters: CollectedLetters = { 1: 'S', 2: 'P', 3: 'C' };
+      expect(getDisplayLetter(1, letters)).toBe('S');
+      expect(getDisplayLetter(2, letters)).toBe('P');
+      expect(getDisplayLetter(3, letters)).toBe('C');
+    });
+
+    it('returns period when position has null value', () => {
+      const letters: CollectedLetters = { 1: 'S', 2: null, 3: 'C' };
+      expect(getDisplayLetter(2, letters)).toBe('.');
+    });
+
+    it('returns period for all positions in empty collection', () => {
+      const letters: CollectedLetters = {};
+      for (let i = 1; i <= 12; i++) {
+        expect(getDisplayLetter(i, letters)).toBe('.');
+      }
+    });
+  });
+
+  describe('All 12 question positions', () => {
+    it('correctly displays letters for all positions 1-12', () => {
+      const targetWord = 'SPECTRALISM';
+      const letters: CollectedLetters = {
+        1: 'S',
+        2: 'P',
+        3: 'E',
+        4: 'C',
+        5: 'T',
+        6: 'R',
+        7: 'A',
+        8: 'L',
+        9: 'I',
+        10: 'S',
+        11: 'M',
+        12: null,
+      };
+
+      expect(getDisplayLetter(1, letters)).toBe('S');
+      expect(getDisplayLetter(2, letters)).toBe('P');
+      expect(getDisplayLetter(3, letters)).toBe('E');
+      expect(getDisplayLetter(4, letters)).toBe('C');
+      expect(getDisplayLetter(5, letters)).toBe('T');
+      expect(getDisplayLetter(6, letters)).toBe('R');
+      expect(getDisplayLetter(7, letters)).toBe('A');
+      expect(getDisplayLetter(8, letters)).toBe('L');
+      expect(getDisplayLetter(9, letters)).toBe('I');
+      expect(getDisplayLetter(10, letters)).toBe('S');
+      expect(getDisplayLetter(11, letters)).toBe('M');
+      expect(getDisplayLetter(12, letters)).toBe('.');
+    });
+
+    it('displays only periods when no letters collected', () => {
+      const letters: CollectedLetters = {
+        1: null,
+        2: null,
+        3: null,
+        4: null,
+        5: null,
+        6: null,
+        7: null,
+        8: null,
+        9: null,
+        10: null,
+        11: null,
+        12: null,
+      };
+
+      for (let i = 1; i <= 12; i++) {
+        expect(getDisplayLetter(i, letters)).toBe('.');
+      }
+    });
+  });
+
+  describe('Edge cases', () => {
+    it('handles mixed collected and uncollected positions', () => {
+      const letters: CollectedLetters = {
+        1: 'A',
+        2: null,
+        3: 'B',
+        4: null,
+        5: 'C',
+        6: null,
+        7: 'D',
+        8: null,
+        9: 'E',
+        10: null,
+        11: 'F',
+        12: null,
+      };
+
+      expect(getDisplayLetter(1, letters)).toBe('A');
+      expect(getDisplayLetter(2, letters)).toBe('.');
+      expect(getDisplayLetter(3, letters)).toBe('B');
+      expect(getDisplayLetter(4, letters)).toBe('.');
+    });
+
+    it('handles undefined position gracefully', () => {
+      const letters: CollectedLetters = { 1: 'S' };
+      // Position 2 is not in the object - should return period
+      expect(getDisplayLetter(2, letters)).toBe('.');
+    });
+
+    it('handles uppercase letters correctly', () => {
+      const letters: CollectedLetters = { 1: 'X', 2: 'Y', 3: 'Z' };
+      expect(getDisplayLetter(1, letters)).toBe('X');
+      expect(getDisplayLetter(2, letters)).toBe('Y');
+      expect(getDisplayLetter(3, letters)).toBe('Z');
+    });
+  });
+});
+
+describe('isAnsweredCorrectly', () => {
+  describe('Detecting answered questions', () => {
+    it('returns true when letter is collected', () => {
+      const letters: CollectedLetters = { 1: 'S', 2: 'P', 3: 'C' };
+      expect(isAnsweredCorrectly(1, letters)).toBe(true);
+      expect(isAnsweredCorrectly(2, letters)).toBe(true);
+      expect(isAnsweredCorrectly(3, letters)).toBe(true);
+    });
+
+    it('returns false when position has null value', () => {
+      const letters: CollectedLetters = { 1: 'S', 2: null, 3: 'C' };
+      expect(isAnsweredCorrectly(2, letters)).toBe(false);
+    });
+
+    it('returns false for all positions in empty collection', () => {
+      const letters: CollectedLetters = {};
+      for (let i = 1; i <= 12; i++) {
+        expect(isAnsweredCorrectly(i, letters)).toBe(false);
+      }
+    });
+
+    it('returns false for undefined positions', () => {
+      const letters: CollectedLetters = { 1: 'S' };
+      expect(isAnsweredCorrectly(2, letters)).toBe(false);
+    });
+  });
+
+  describe('All 12 question positions', () => {
+    it('correctly identifies answered status for all positions', () => {
+      const letters: CollectedLetters = {
+        1: 'S',
+        2: 'P',
+        3: 'E',
+        4: null,
+        5: 'T',
+        6: null,
+        7: 'A',
+        8: null,
+        9: 'I',
+        10: null,
+        11: 'M',
+        12: null,
+      };
+
+      // Answered positions
+      expect(isAnsweredCorrectly(1, letters)).toBe(true);
+      expect(isAnsweredCorrectly(2, letters)).toBe(true);
+      expect(isAnsweredCorrectly(3, letters)).toBe(true);
+      expect(isAnsweredCorrectly(5, letters)).toBe(true);
+      expect(isAnsweredCorrectly(7, letters)).toBe(true);
+      expect(isAnsweredCorrectly(9, letters)).toBe(true);
+      expect(isAnsweredCorrectly(11, letters)).toBe(true);
+
+      // Unanswered positions
+      expect(isAnsweredCorrectly(4, letters)).toBe(false);
+      expect(isAnsweredCorrectly(6, letters)).toBe(false);
+      expect(isAnsweredCorrectly(8, letters)).toBe(false);
+      expect(isAnsweredCorrectly(10, letters)).toBe(false);
+      expect(isAnsweredCorrectly(12, letters)).toBe(false);
+    });
+  });
+
+  describe('Edge cases', () => {
+    it('distinguishes between null and undefined', () => {
+      const letters: CollectedLetters = { 1: null };
+      expect(isAnsweredCorrectly(1, letters)).toBe(false); // Explicit null
+      expect(isAnsweredCorrectly(2, letters)).toBe(false); // Undefined (not in object)
+    });
+
+    it('works with complete collection', () => {
+      const letters: CollectedLetters = {
+        1: 'A',
+        2: 'B',
+        3: 'C',
+        4: 'D',
+        5: 'E',
+        6: 'F',
+        7: 'G',
+        8: 'H',
+        9: 'I',
+        10: 'J',
+        11: 'K',
+        12: 'L',
+      };
+
+      for (let i = 1; i <= 12; i++) {
+        expect(isAnsweredCorrectly(i, letters)).toBe(true);
+      }
+    });
+
+    it('works with no answers collected', () => {
+      const letters: CollectedLetters = {
+        1: null,
+        2: null,
+        3: null,
+        4: null,
+        5: null,
+        6: null,
+        7: null,
+        8: null,
+        9: null,
+        10: null,
+        11: null,
+        12: null,
+      };
+
+      for (let i = 1; i <= 12; i++) {
+        expect(isAnsweredCorrectly(i, letters)).toBe(false);
+      }
+    });
+  });
+
+  describe('Real-world game scenarios', () => {
+    it('tracks progress through a game session', () => {
+      let letters: CollectedLetters = {
+        1: null,
+        2: null,
+        3: null,
+        4: null,
+        5: null,
+        6: null,
+        7: null,
+        8: null,
+        9: null,
+        10: null,
+        11: null,
+        12: null,
+      };
+
+      // Player answers question 1
+      letters = { ...letters, 1: 'S' };
+      expect(isAnsweredCorrectly(1, letters)).toBe(true);
+      expect(isAnsweredCorrectly(2, letters)).toBe(false);
+
+      // Player answers question 3
+      letters = { ...letters, 3: 'E' };
+      expect(isAnsweredCorrectly(1, letters)).toBe(true);
+      expect(isAnsweredCorrectly(3, letters)).toBe(true);
+      expect(isAnsweredCorrectly(2, letters)).toBe(false);
+
+      // Player gets question 5 wrong (still null)
+      expect(isAnsweredCorrectly(5, letters)).toBe(false);
+
+      // Player answers question 5
+      letters = { ...letters, 5: 'C' };
+      expect(isAnsweredCorrectly(5, letters)).toBe(true);
+    });
+
+    it('counts answered questions correctly', () => {
+      const letters: CollectedLetters = {
+        1: 'S',
+        2: null,
+        3: 'E',
+        4: null,
+        5: 'C',
+        6: null,
+        7: 'T',
+        8: null,
+        9: 'R',
+        10: null,
+        11: 'A',
+        12: null,
+      };
+
+      const answeredCount = Array.from({ length: 12 }, (_, i) =>
+        isAnsweredCorrectly(i + 1, letters) ? 1 : 0
+      ).reduce((a, b) => a + b, 0);
+
+      expect(answeredCount).toBe(6);
     });
   });
 });

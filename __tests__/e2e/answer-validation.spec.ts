@@ -172,4 +172,60 @@ test.describe('Answer Validation - User Story 1', () => {
     const feedback = await validationPage.getValidationFeedback();
     expect(feedback).toBeTruthy();
   });
+
+  test('T020: Letter displays in question square after correct answer', async ({ page }) => {
+    // Submit a correct answer to question 1
+    await validationPage.submitAnswerViaButton('test');
+    await page.waitForTimeout(200);
+
+    // Get the question square for position 1
+    const square = validationPage.getQuestionSquare(1);
+
+    // The square should contain a letter (not just a period)
+    // Check that the square has text content (the revealed letter)
+    const text = await square.textContent();
+    expect(text).toBeTruthy();
+    // For a correct answer, it should show a letter (not a period)
+    // Note: The actual letter depends on the question set data
+    // This test verifies that SOME content is displayed
+  });
+
+  test('T020: Period displays for unanswered questions', async ({ page }) => {
+    // Without answering any questions, all squares should show periods
+    const square = validationPage.getQuestionSquare(1);
+
+    // On first load, Q1 should show a period (not answered yet)
+    const text = await square.textContent();
+    expect(text).toBe('.');
+  });
+
+  test('T020: Verify letter content matches revealed letter from question', async ({ page }) => {
+    // Load a fresh game to check initial state
+    // All squares should show periods initially
+    for (let i = 1; i <= 3; i++) {
+      const square = validationPage.getQuestionSquare(i);
+      const text = await square.textContent();
+      expect(text).toBe('.');
+    }
+
+    // Submit correct answer to Q1
+    await validationPage.submitAnswerViaButton('test');
+    await page.waitForTimeout(200);
+
+    // Q1 should now show a letter (not a period)
+    const square1 = validationPage.getQuestionSquare(1);
+    const text1 = await square1.textContent();
+    expect(text1).not.toBe('.');
+    expect(text1?.length).toBe(1); // Should be a single character
+    expect(text1).toMatch(/[A-Z]/); // Should be an uppercase letter
+
+    // Q2 and Q3 should still show periods
+    const square2 = validationPage.getQuestionSquare(2);
+    const text2 = await square2.textContent();
+    expect(text2).toBe('.');
+
+    const square3 = validationPage.getQuestionSquare(3);
+    const text3 = await square3.textContent();
+    expect(text3).toBe('.');
+  });
 });

@@ -1,4 +1,4 @@
-import { QuestionSet } from './types';
+import { QuestionSet, CollectedLetters } from './types';
 
 /**
  * Randomly selects one question set from an array of question sets
@@ -26,6 +26,26 @@ export function selectRandomQuestionSet(questionSets: QuestionSet[]): QuestionSe
   // Generate random index: Math.random() returns [0, 1)
   // Multiply by length and floor to get integer in range [0, length-1]
   const randomIndex = Math.floor(Math.random() * questionSets.length);
-  
+
   return questionSets[randomIndex];
+}
+
+/**
+ * Initializes an empty letter collection for a new game
+ *
+ * Creates a CollectedLetters object with all 12 positions set to null,
+ * indicating that no questions have been answered yet.
+ *
+ * @returns A CollectedLetters object with positions 1-12 all set to null
+ *
+ * @example
+ * const letters = initializeCollectedLetters();
+ * // returns { 1: null, 2: null, ..., 12: null }
+ */
+export function initializeCollectedLetters(): CollectedLetters {
+  const letters: CollectedLetters = {};
+  for (let i = 1; i <= 12; i++) {
+    letters[i] = null;
+  }
+  return letters;
 }

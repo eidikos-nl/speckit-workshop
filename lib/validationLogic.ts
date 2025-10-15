@@ -5,6 +5,8 @@
  * Pure functions that can be unit tested independently of React components.
  */
 
+import { CollectedLetters } from './types';
+
 export interface AnswerValidationResult {
   isCorrect: boolean;
   normalizedSubmitted: string;
@@ -61,4 +63,46 @@ export function validateAnswer(
     normalizedSubmitted,
     normalizedCorrect,
   };
+}
+
+/**
+ * Gets the display character for a question position
+ *
+ * Returns the collected letter if the question has been answered correctly,
+ * otherwise returns a period "." to indicate an unanswered question.
+ *
+ * @param questionNumber - The position (1-12) of the question in the game
+ * @param collectedLetters - The current collection of answered letters
+ * @returns Either the collected letter or "." for unanswered questions
+ *
+ * @example
+ * getDisplayLetter(1, { 1: "S", 2: null }) // returns "S"
+ * getDisplayLetter(2, { 1: "S", 2: null }) // returns "."
+ */
+export function getDisplayLetter(
+  questionNumber: number,
+  collectedLetters: CollectedLetters
+): string {
+  const letter = collectedLetters[questionNumber];
+  return letter ?? '.';
+}
+
+/**
+ * Checks if a question has been answered correctly
+ *
+ * A question is considered answered correctly if a letter is collected for it.
+ *
+ * @param questionNumber - The position (1-12) of the question in the game
+ * @param collectedLetters - The current collection of answered letters
+ * @returns true if the question has been answered correctly, false otherwise
+ *
+ * @example
+ * isAnsweredCorrectly(1, { 1: "S", 2: null }) // returns true
+ * isAnsweredCorrectly(2, { 1: "S", 2: null }) // returns false
+ */
+export function isAnsweredCorrectly(
+  questionNumber: number,
+  collectedLetters: CollectedLetters
+): boolean {
+  return collectedLetters[questionNumber] !== null && collectedLetters[questionNumber] !== undefined;
 }

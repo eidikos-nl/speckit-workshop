@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { GameSession, QuestionSet } from '@/lib/types';
-import { selectRandomQuestionSet } from '@/lib/gameLogic';
+import { selectRandomQuestionSet, initializeCollectedLetters } from '@/lib/gameLogic';
 import { loadQuestionSets } from '@/lib/questionSets';
 import { GameContainer } from './components/GameContainer';
 
@@ -11,6 +11,7 @@ export default function Home() {
   const [gameSession, setGameSession] = useState<GameSession>({
     isActive: false,
     selectedQuestionSet: null,
+    collectedLetters: {},
   });
 
   const [questionSets, setQuestionSets] = useState<QuestionSet[]>([]);
@@ -42,6 +43,7 @@ export default function Home() {
       setGameSession({
         isActive: true,
         selectedQuestionSet: selectedSet,
+        collectedLetters: initializeCollectedLetters(),
       });
       setError(null);
     } catch (err) {
@@ -54,6 +56,7 @@ export default function Home() {
     setGameSession({
       isActive: false,
       selectedQuestionSet: null,
+      collectedLetters: {},
     });
   };
 

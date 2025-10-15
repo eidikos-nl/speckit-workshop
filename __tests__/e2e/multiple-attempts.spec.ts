@@ -288,4 +288,113 @@ test.describe('Multiple Submission Attempts - User Story 3', () => {
     const inputValue = await validationPage.getInputValue();
     expect(inputValue).toBe('test2');
   });
+
+  test('T021: Letters persist when navigating between questions', async ({ page }) => {
+    // Submit correct answers to multiple questions
+    // Get the initial letter display for Q1 (should be period)
+    let square1 = validationPage.getQuestionSquare(1);
+    let text1 = await square1.textContent();
+    expect(text1).toBe('.'); // Initially unanswered
+
+    // Answer Q1
+    await validationPage.submitAnswerViaButton('test');
+    await page.waitForTimeout(200);
+
+    // Q1 should now show a letter
+    square1 = validationPage.getQuestionSquare(1);
+    text1 = await square1.textContent();
+    expect(text1).not.toBe('.');
+    const letterQ1 = text1;
+
+    // Navigate to Q2
+    await validationPage.getQuestionSquare(2).click();
+    await page.waitForTimeout(200);
+
+    // Q2 should show period (unanswered)
+    let square2 = validationPage.getQuestionSquare(2);
+    let text2 = await square2.textContent();
+    expect(text2).toBe('.');
+
+    // Answer Q2
+    await validationPage.submitAnswerViaButton('test');
+    await page.waitForTimeout(200);
+
+    // Q2 should now show a letter
+    square2 = validationPage.getQuestionSquare(2);
+    text2 = await square2.textContent();
+    expect(text2).not.toBe('.');
+
+    // Navigate to Q3
+    await validationPage.getQuestionSquare(3).click();
+    await page.waitForTimeout(200);
+
+    // Navigate back to Q1 - Q1 should still show the same letter
+    await validationPage.getQuestionSquare(1).click();
+    await page.waitForTimeout(200);
+
+    square1 = validationPage.getQuestionSquare(1);
+    text1 = await square1.textContent();
+    expect(text1).toBe(letterQ1); // Letter persisted!
+
+    // Q2 should still show its letter
+    square2 = validationPage.getQuestionSquare(2);
+    text2 = await square2.textContent();
+    expect(text2).not.toBe('.');
+  });
+
+  test('T021: Letters reset when starting a new game', async ({ page }) => {
+    // Answer Q1
+    await validationPage.submitAnswerViaButton('test');
+    await page.waitForTimeout(200);
+
+    // Q1 should show a letter
+    let square1 = validationPage.getQuestionSquare(1);
+    let text1 = await square1.textContent();
+    expect(text1).not.toBe('.');
+
+    // Stop the game
+    await gamePage.stopGame();
+    await page.waitForTimeout(200);
+
+    // Start a new game
+    await gamePage.startGame();
+    await page.waitForTimeout(200);
+
+    // Q1 should reset to show period (not answered)
+    square1 = validationPage.getQuestionSquare(1);
+    text1 = await square1.textContent();
+    expect(text1).toBe('.'); // Reset!
+  });
+
+  test('T021: All letters reset on new game', async ({ page }) => {
+    // Answer multiple questions
+    for (let i = 0; i < 3; i++) {
+      if (i > 0) {
+        await validationPage.getQuestionSquare(i + 1).click();
+        await page.waitForTimeout(200);
+      }
+      await validationPage.submitAnswerViaButton(`test${i}`);
+      await page.waitForTimeout(100);
+    }
+
+    // Verify all three have letters
+    for (let i = 1; i <= 3; i++) {
+      const square = validationPage.getQuestionSquare(i);
+      const text = await square.textContent();
+      expect(text).not.toBe('.');
+    }
+
+    // Stop and restart game
+    await gamePage.stopGame();
+    await page.waitForTimeout(200);
+    await gamePage.startGame();
+    await page.waitForTimeout(200);
+
+    // All should reset to periods
+    for (let i = 1; i <= 3; i++) {
+      const square = validationPage.getQuestionSquare(i);
+      const text = await square.textContent();
+      expect(text).toBe('.');
+    }
+  });
 });

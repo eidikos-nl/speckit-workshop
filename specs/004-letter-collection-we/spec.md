@@ -1,8 +1,8 @@
 # Feature Specification: Letter Collection Display
 
-**Feature Branch**: `004-letter-collection-we`  
-**Created**: 2025-10-15  
-**Status**: Draft  
+**Feature Branch**: `004-letter-collection-we`
+**Created**: 2025-10-15
+**Status**: Complete (2025-10-16)
 **Input**: User description: "letter collection. We should now display the collected letter in the correct linked box. Currently the box is already green when correct. Maybe its a good addition to show a simple "period" when a question has not been answered yet (or incorrect) and show the actual letter when the answer is correct. This should be remembered for the duration of the game."
 
 ## User Scenarios & Testing *(mandatory)*

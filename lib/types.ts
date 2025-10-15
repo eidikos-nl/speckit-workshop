@@ -43,15 +43,27 @@ export interface QuestionSet {
 }
 
 /**
+ * Collection of letters revealed through correct answers
+ *
+ * Maps question positions (1-12) to their revealed letters
+ * A null value indicates the question has not been answered correctly yet
+ *
+ * Example: { 1: "S", 2: null, 3: "C", ... } shows letters revealed for questions 1 and 3
+ */
+export type CollectedLetters = Record<number, string | null>;
+
+/**
  * Represents an active game session
- * 
+ *
  * State invariants:
  * - When isActive is true, selectedQuestionSet must not be null
  * - When isActive is false, selectedQuestionSet may be null
+ * - collectedLetters must contain entries for all 12 positions (1-12)
  */
 export interface GameSession {
   isActive: boolean;
   selectedQuestionSet: QuestionSet | null;
+  collectedLetters: CollectedLetters;
 }
 
 /**

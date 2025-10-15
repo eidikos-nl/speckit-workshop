@@ -1,17 +1,24 @@
 import React from 'react';
+import { CollectedLetters } from '@/lib/types';
 
 interface NavigationChevronsProps {
   /** Whether the "Next" button should be enabled */
   canGoNext: boolean;
-  
+
   /** Whether the "Previous" button should be enabled */
   canGoPrevious: boolean;
-  
+
   /** Callback when user clicks "Next" */
   onNext: () => void;
-  
+
   /** Callback when user clicks "Previous" */
   onPrevious: () => void;
+
+  /** T010: Collection of revealed letters for each question position (1-12) */
+  collectedLetters?: CollectedLetters;
+
+  /** T010: Current question number (1-12) for display */
+  currentQuestionNumber?: number;
 }
 
 /**
@@ -23,7 +30,12 @@ export function NavigationChevrons({
   canGoPrevious,
   onNext,
   onPrevious,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  collectedLetters = {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  currentQuestionNumber,
 }: NavigationChevronsProps) {
+
   return (
     <div className="flex items-center justify-center gap-8 py-4">
       {/* Previous Chevron */}

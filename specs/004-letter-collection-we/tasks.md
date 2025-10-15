@@ -51,17 +51,17 @@ Phase 6: Polish & Cross-Cutting (E2E tests, validation)
 
 ## Phase 1: Setup
 
-- [ ] T001 Verify project structure and existing test configuration in place (`jest.config.js`, `playwright.config.ts`)
-- [ ] T002 Create feature task tracking by updating this file with progress status
+- [x] T001 Verify project structure and existing test configuration in place (`jest.config.js`, `playwright.config.ts`)
+- [x] T002 Create feature task tracking by updating this file with progress status
 
 ---
 
 ## Phase 2: Foundational Prerequisites
 
-- [ ] T003 Add `CollectedLetters` type definition to `lib/types.ts` with Record<number, string | null> structure
-- [ ] T004 Extend `GameSession` interface in `lib/types.ts` to include `collectedLetters: CollectedLetters` property
-- [ ] T005 Add helper function `getDisplayLetter(questionNumber: number, collectedLetters: CollectedLetters): string` to `lib/validationLogic.ts` returning letter or "."
-- [ ] T006 Add helper function `isAnsweredCorrectly(questionNumber: number, collectedLetters: CollectedLetters): boolean` to `lib/validationLogic.ts` checking if letter exists
+- [x] T003 Add `CollectedLetters` type definition to `lib/types.ts` with Record<number, string | null> structure
+- [x] T004 Extend `GameSession` interface in `lib/types.ts` to include `collectedLetters: CollectedLetters` property
+- [x] T005 Add helper function `getDisplayLetter(questionNumber: number, collectedLetters: CollectedLetters): string` to `lib/validationLogic.ts` returning letter or "."
+- [x] T006 Add helper function `isAnsweredCorrectly(questionNumber: number, collectedLetters: CollectedLetters): boolean` to `lib/validationLogic.ts` checking if letter exists
 
 ---
 
@@ -80,11 +80,11 @@ Phase 6: Polish & Cross-Cutting (E2E tests, validation)
 
 **Tasks**:
 
-- [ ] T007 [P] [US1] Update `gameLogic.ts` startGame() to initialize collectedLetters with all positions set to null
-- [ ] T008 [P] [US1] Add letter extraction and state update to answer validation flow in `lib/validationLogic.ts`
-- [ ] T009 [P] [US1] Update `GameContainer.tsx` to manage collectedLetters state and pass as prop to child components
-- [ ] T010 [P] [US1] Update `NavigationChevrons.tsx` to accept collectedLetters prop and display letter or period for each box
-- [ ] T011 [P] [US1] Update `QuestionGrid.tsx` to accept collectedLetters prop and display letter or period for each square
+- [x] T007 [P] [US1] Update `gameLogic.ts` startGame() to initialize collectedLetters with all positions set to null
+- [x] T008 [P] [US1] Add letter extraction and state update to answer validation flow in `lib/validationLogic.ts`
+- [x] T009 [P] [US1] Update `GameContainer.tsx` to manage collectedLetters state and pass as prop to child components
+- [x] T010 [P] [US1] Update `NavigationChevrons.tsx` to accept collectedLetters prop and display letter or period for each box
+- [x] T011 [P] [US1] Update `QuestionGrid.tsx` to accept collectedLetters prop and display letter or period for each square
 
 ---
 
@@ -104,9 +104,9 @@ Phase 6: Polish & Cross-Cutting (E2E tests, validation)
 
 **Tasks**:
 
-- [ ] T012 [P] [US2] Update styling logic in `NavigationChevrons.tsx` to show white background with border for period display
-- [ ] T013 [P] [US2] Update styling logic in `QuestionGrid.tsx` to show white background with border for period display
-- [ ] T014 [P] [US2] Verify conditional styling applies correct Tailwind classes (bg-green-500 for letters, bg-white border for periods)
+- [x] T012 [P] [US2] Update styling logic in `NavigationChevrons.tsx` to show white background with border for period display
+- [x] T013 [P] [US2] Update styling logic in `QuestionGrid.tsx` to show white background with border for period display
+- [x] T014 [P] [US2] Verify conditional styling applies correct Tailwind classes (bg-green-500 for letters, bg-white border for periods)
 
 ---
 
@@ -126,18 +126,18 @@ Phase 6: Polish & Cross-Cutting (E2E tests, validation)
 
 **Tasks**:
 
-- [ ] T015 [P] [US3] Verify collectedLetters state persists when question selection changes in `GameContainer.tsx`
-- [ ] T016 [P] [US3] Verify collectedLetters resets to all null values in `gameLogic.ts` stopGame() and startGame() when new game begins
-- [ ] T017 [P] [US3] Add manual testing scenario: answer 3+ questions, navigate between them, verify persistence; stop and restart game, verify reset
+- [x] T015 [P] [US3] Verify collectedLetters state persists when question selection changes in `GameContainer.tsx`
+- [x] T016 [P] [US3] Verify collectedLetters resets to all null values in `gameLogic.ts` stopGame() and startGame() when new game begins
+- [x] T017 [P] [US3] Add manual testing scenario: answer 3+ questions, navigate between them, verify persistence; stop and restart game, verify reset
 
 ---
 
 ## Phase 6: Polish & Cross-Cutting Concerns
 
-- [ ] T018 [P] Add unit tests for `getDisplayLetter()` helper function in `__tests__/unit/validationLogic.test.ts` covering all 12 positions and null values
-- [ ] T019 [P] Add unit tests for `isAnsweredCorrectly()` helper function in `__tests__/unit/validationLogic.test.ts` covering true and false cases
-- [ ] T020 [P] Update `__tests__/e2e/answer-validation.spec.ts` to verify letter displays in navigation box after correct answer submission
-- [ ] T021 [P] Update `__tests__/e2e/multiple-attempts.spec.ts` to verify letters persist when navigating between questions and reset on new game
+- [x] T018 [P] Add unit tests for `getDisplayLetter()` helper function in `__tests__/unit/validationLogic.test.ts` covering all 12 positions and null values
+- [x] T019 [P] Add unit tests for `isAnsweredCorrectly()` helper function in `__tests__/unit/validationLogic.test.ts` covering true and false cases
+- [x] T020 [P] Update `__tests__/e2e/answer-validation.spec.ts` to verify letter displays in navigation box after correct answer submission
+- [x] T021 [P] Update `__tests__/e2e/multiple-attempts.spec.ts` to verify letters persist when navigating between questions and reset on new game
 
 ---
 

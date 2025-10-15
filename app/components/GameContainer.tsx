@@ -84,7 +84,20 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
+      {/* Stop Game Button - Top Right */}
+      <button
+        onClick={onStopGame}
+        className="absolute top-0 right-0 p-2 rounded-full transition-all duration-200 text-gray-400 hover:text-red-500 hover:bg-red-50"
+        aria-label="Stop the current game session"
+        data-testid="stop-game-button"
+        title="Stop Game"
+      >
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
       {/* Theme Display */}
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-semibold text-gray-700">Theme</h2>
@@ -168,17 +181,6 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
         collectedLetters={collectedLetters}
       />
 
-      {/* Stop Game Button */}
-      <div className="text-center pt-4">
-        <button
-          onClick={onStopGame}
-          className="btn-danger"
-          aria-label="Stop the current game session"
-          data-testid="stop-game-button"
-        >
-          Stop Game
-        </button>
-      </div>
     </div>
   );
 }

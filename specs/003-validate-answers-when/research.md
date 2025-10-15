@@ -222,7 +222,7 @@ import clsx from 'clsx';
 **Decision**: Reuse existing feedback paragraph (line 62 of QuestionDisplay.tsx) with conditional content
 
 **Rationale**:
-- Existing structure already has text element: "Answer verification coming in a future update"
+- Existing structure already has text element: "Provide the correct answer and earn a letter..."
 - No DOM restructuring needed (constraint from requirements)
 - Simple conditional rendering based on validation state
 - Accessible (text is readable by screen readers)
@@ -249,13 +249,13 @@ const [feedbackText, setFeedbackText] = useState('');
 // Helper text section (line 59-64, UPDATED)
 <div className="text-center">
   <p className="text-sm text-gray-500" data-testid="validation-feedback">
-    {feedbackText || 'Answer verification coming in a future update'}
+    {feedbackText || 'Provide the correct answer and earn a letter...'}
   </p>
 </div>
 ```
 
 **Feedback State Machine**:
-- Initial: "Answer verification coming in a future update"
+- Initial: "Provide the correct answer and earn a letter..."
 - After incorrect submission: "That is incorrect"
 - After correct submission: "" (empty, green box is sufficient feedback)
 - On input change: "" (cleared immediately for fresh attempt)

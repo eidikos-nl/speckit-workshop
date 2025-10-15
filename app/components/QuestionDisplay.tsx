@@ -118,7 +118,7 @@ export function QuestionDisplay({
           }`}
           data-testid="validation-feedback"
         >
-          {feedbackText || 'Answer verification coming in a future update'}
+          {feedbackText || 'Provide the correct answer and earn a letter...'}
         </p>
       </div>
     </div>

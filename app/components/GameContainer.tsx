@@ -1,12 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { GameSession, CollectedLetters, GameResult } from '@/lib/types';
 import { canNavigateNext, canNavigatePrevious } from '@/lib/navigationLogic';
 import { validateAnswer, validateFinalAnswer } from '@/lib/validationLogic';
 import { QuestionDisplay } from './QuestionDisplay';
 import { QuestionGrid } from './QuestionGrid';
 import { FinalAnswerInput } from './FinalAnswerInput';
+import { TimerPanel } from './TimerPanel';
+import { useGameTimer } from '../hooks/useGameTimer';
 
 interface GameContainerProps {
   gameSession: GameSession;
@@ -39,6 +41,39 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
   // T009: Track the result of the final answer submission (win/loss outcome)
   const [gameResult, setGameResult] = useState<GameResult | null>(null);
 
+  // T045-T048: Callback when final timer expires - set game result to loss
+  const handleFinalTimerExpire = useCallback(() => {
+    if (!gameSession.selectedQuestionSet || gameEnded) {
+      return;
+    }
+
+    const { targetWord } = gameSession.selectedQuestionSet;
+
+    // T046: Set game result to loss with correct answer and incomplete player answer
+    setGameResult({
+      outcome: 'loss',
+      correctAnswer: targetWord,
+      playerAnswer: finalAnswer || 'INCOMPLETE',
+      timestamp: new Date().toISOString(),
+    });
+
+    // T047: Set gameEnded to true to prevent further gameplay
+    setGameEnded(true);
+  }, [gameSession.selectedQuestionSet, gameEnded, finalAnswer]);
+
+  // T010-T015: Initialize timer with main 600s (10 minutes) and final 120s (2 minutes)
+  // T022: Initialize with EXPLORATION phase and full durations
+  const timerState = useGameTimer(
+    600, // main duration
+    120, // final duration
+    // T014: Callback when main timer expires - phase transition handled by hook
+    useCallback(() => {
+      // No additional action needed - hook handles phase transition
+    }, []),
+    // T014: Callback when final timer expires
+    handleFinalTimerExpire
+  );
+
   // Guard: Only render if game is active with a valid question set
   if (!gameSession.isActive || !gameSession.selectedQuestionSet) {
     return null;
@@ -52,6 +87,10 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
   const canGoNext = canNavigateNext(currentQuestionIndex, totalQuestions);
   const canGoPrevious = canNavigatePrevious(currentQuestionIndex);
 
+  // T026-T027: Disable navigation during FINAL_ANSWER phase
+  const isNavigationDisabled = timerState.phase !== 'exploration';
+  const displayOpacity = timerState.phase === 'final_answer' ? 0.2 : 1;
+
   // T013: Handler for final answer submission
   // Validates the submitted answer, determines win/loss outcome, and ends the game
   // Includes submission guard to prevent duplicate clicks
@@ -62,6 +101,11 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
 
     const { targetWord } = gameSession.selectedQuestionSet;
     const result = validateFinalAnswer(finalAnswer, targetWord);
+
+    // T052-T053: Stop timer when correct answer is submitted
+    if (result.outcome === 'win') {
+      timerState.stopTimer();
+    }
 
     setGameResult(result);
     setGameEnded(true);
@@ -137,14 +181,15 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
       {/* Question Number with Chevrons beside it */}
       <div className="flex items-center justify-center gap-4 py-4">
         {/* Previous chevron button */}
+        {/* T027: Disable when phase !== EXPLORATION */}
         <button
           onClick={handlePrevious}
-          disabled={!canGoPrevious}
+          disabled={!canGoPrevious || isNavigationDisabled}
           data-testid="previous-chevron"
           aria-label="Go to previous question"
           className={`
             p-2 rounded-full transition-all duration-200
-            ${canGoPrevious
+            ${canGoPrevious && !isNavigationDisabled
               ? 'bg-game-primary hover:bg-game-primary/80 text-white cursor-pointer shadow-md hover:shadow-lg'
               : 'bg-gray-200 text-gray-400 cursor-not-allowed'
             }
@@ -164,14 +209,15 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
         </p>
 
         {/* Next chevron button */}
+        {/* T027: Disable when phase !== EXPLORATION */}
         <button
           onClick={handleNext}
-          disabled={!canGoNext}
+          disabled={!canGoNext || isNavigationDisabled}
           data-testid="next-chevron"
           aria-label="Go to next question"
           className={`
             p-2 rounded-full transition-all duration-200
-            ${canGoNext
+            ${canGoNext && !isNavigationDisabled
               ? 'bg-game-primary hover:bg-game-primary/80 text-white cursor-pointer shadow-md hover:shadow-lg'
               : 'bg-gray-200 text-gray-400 cursor-not-allowed'
             }
@@ -186,25 +232,31 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
       {/* T021: QuestionDisplay integrated to show current question */}
       {/* T046: Key prop ensures input clears on navigation */}
       {/* T012: Pass handleAnswerSubmit callback to QuestionDisplay */}
-      <QuestionDisplay
-        key={currentQuestionIndex}
-        question={currentQuestion}
-        questionNumber={currentQuestionIndex + 1}
-        totalQuestions={totalQuestions}
-        onAnswerSubmit={handleAnswerSubmit}
-      />
+      {/* T029: Apply opacity based on phase */}
+      <div style={{ opacity: displayOpacity, pointerEvents: isNavigationDisabled ? 'none' : 'auto' }}>
+        <QuestionDisplay
+          key={currentQuestionIndex}
+          question={currentQuestion}
+          questionNumber={currentQuestionIndex + 1}
+          totalQuestions={totalQuestions}
+          onAnswerSubmit={handleAnswerSubmit}
+        />
+      </div>
 
       {/* T034: QuestionGrid integrated with onSelectQuestion handler - moved below answer input */}
       {/* T013: Pass answeredQuestions state to QuestionGrid */}
       {/* T011: Pass collectedLetters to QuestionGrid for display */}
-      <QuestionGrid
-        currentQuestionIndex={currentQuestionIndex}
-        totalQuestions={totalQuestions}
-        onSelectQuestion={handleSelectQuestion}
-        answeredQuestions={answeredQuestions}
-        questions={questions}
-        collectedLetters={collectedLetters}
-      />
+      {/* T032: Apply opacity based on phase */}
+      <div style={{ opacity: displayOpacity, pointerEvents: isNavigationDisabled ? 'none' : 'auto' }}>
+        <QuestionGrid
+          currentQuestionIndex={currentQuestionIndex}
+          totalQuestions={totalQuestions}
+          onSelectQuestion={handleSelectQuestion}
+          answeredQuestions={answeredQuestions}
+          questions={questions}
+          collectedLetters={collectedLetters}
+        />
+      </div>
 
       {/* T031: Add subtle visual spacer between QuestionGrid and FinalAnswerInput */}
       <div className="border-t border-gray-200 py-6"></div>
@@ -218,6 +270,14 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
         onSubmit={handleFinalAnswerSubmit}
         gameEnded={gameEnded}
         gameResult={gameResult}
+      />
+
+      {/* T016-T021: Integrate TimerPanel component with timer state */}
+      <TimerPanel
+        mainTimeRemaining={timerState.mainTimeRemaining}
+        finalTimeRemaining={timerState.finalTimeRemaining}
+        phase={timerState.phase}
+        isTimerStopped={timerState.isTimerStopped}
       />
     </div>
   );

@@ -35,7 +35,7 @@ A player enters an incorrect answer and receives clear feedback so they understa
 
 1. **Given** a player is viewing a question, **When** they enter an incorrect answer and submit, **Then** the text below the answer input displays "That is incorrect"
 2. **Given** a player has submitted an incorrect answer, **When** they modify the answer in the input field, **Then** the incorrect feedback text is cleared to allow a fresh attempt
-3. **Given** a player views a question with the placeholder text "Answer verification coming in a future update", **When** answer validation is implemented, **Then** this text is replaced with dynamic feedback ("That is incorrect" for wrong answers, cleared for correct answers)
+3. **Given** a player views a question with the placeholder text "Provide the correct answer and earn a letter...", **When** answer validation is implemented, **Then** this text is replaced with dynamic feedback ("That is incorrect" for wrong answers, cleared for correct answers)
 
 ---
 
@@ -78,7 +78,7 @@ A player can submit multiple answers for the same question until they get it rig
 - **FR-010**: System MUST handle special characters in answers according to case-insensitive rules (preserve non-alphabetic characters for exact matching)
 - **FR-011**: System MUST display the text "That is incorrect" below the answer input when an incorrect answer is submitted
 - **FR-012**: System MUST clear the incorrect feedback text when the player modifies the answer in the input field
-- **FR-013**: System MUST replace the existing placeholder text "Answer verification coming in a future update" with dynamic feedback
+- **FR-013**: System MUST replace the existing placeholder text "Provide the correct answer and earn a letter..." with dynamic feedback
 
 ### Key Entities
 

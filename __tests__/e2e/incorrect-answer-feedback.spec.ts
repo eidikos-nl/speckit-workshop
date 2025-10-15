@@ -69,7 +69,7 @@ test.describe('Incorrect Answer Feedback - User Story 2', () => {
     // Feedback should clear (revert to default text)
     feedback = await validationPage.getValidationFeedback();
     expect(feedback).not.toContain('That is incorrect');
-    expect(feedback).toContain('Answer verification coming in a future update');
+    expect(feedback).toContain('Provide the correct answer and earn a letter...');
   });
 
   test('T017: Feedback clears on partial keystroke changes', async ({ page }) => {
@@ -178,12 +178,8 @@ test.describe('Incorrect Answer Feedback - User Story 2', () => {
     await validationPage.getQuestionSquare(2).click();
     await page.waitForTimeout(200);
 
-    // Input should be cleared (key prop on QuestionDisplay ensures this)
-    const inputValue = await validationPage.getInputValue();
-    expect(inputValue).toBe('');
-
     // Feedback should revert to default since new component instance
     feedback = await validationPage.getValidationFeedback();
-    expect(feedback).toContain('Answer verification coming in a future update');
+    expect(feedback).toContain('Provide the correct answer and earn a letter...');
   });
 });

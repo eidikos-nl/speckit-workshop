@@ -85,7 +85,7 @@ description: "Task list for Answer Validation feature implementation"
 
 - [x] T018 [US2] Update handleAnswerSubmit in QuestionDisplay to set feedbackText to "That is incorrect" for wrong answers in app/components/QuestionDisplay.tsx
 - [x] T019 [US2] Update input onChange handler to clear feedbackText when user modifies answer in app/components/QuestionDisplay.tsx
-- [x] T020 [US2] Replace placeholder text "Answer verification coming in a future update" with dynamic feedbackText in QuestionDisplay in app/components/QuestionDisplay.tsx
+- [x] T020 [US2] Replace placeholder text "Provide the correct answer and earn a letter..." with dynamic feedbackText in QuestionDisplay in app/components/QuestionDisplay.tsx
 - [x] T021 [US2] Add data-testid="validation-feedback" to feedback paragraph element in app/components/QuestionDisplay.tsx
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work - players get visual feedback for both correct (green box) and incorrect (text message) answers

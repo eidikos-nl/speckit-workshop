@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { GameSession, QuestionSet } from '@/lib/types';
+import { GameSession, QuestionSet, GamePhase } from '@/lib/types';
 import { selectRandomQuestionSet, initializeCollectedLetters } from '@/lib/gameLogic';
 import { loadQuestionSets } from '@/lib/questionSets';
 import { GameContainer } from './components/GameContainer';
@@ -12,6 +12,14 @@ export default function Home() {
     isActive: false,
     selectedQuestionSet: null,
     collectedLetters: {},
+    timerState: {
+      mainTimeRemaining: 600,
+      finalTimeRemaining: 120,
+      mainTimerStarted: Date.now(),
+      finalTimerStarted: null,
+      isTimerStopped: false,
+      phase: GamePhase.EXPLORATION,
+    },
   });
 
   const [questionSets, setQuestionSets] = useState<QuestionSet[]>([]);
@@ -40,10 +48,19 @@ export default function Home() {
 
     try {
       const selectedSet = selectRandomQuestionSet(questionSets);
+      const now = Date.now();
       setGameSession({
         isActive: true,
         selectedQuestionSet: selectedSet,
         collectedLetters: initializeCollectedLetters(),
+        timerState: {
+          mainTimeRemaining: 600,
+          finalTimeRemaining: 120,
+          mainTimerStarted: now,
+          finalTimerStarted: null,
+          isTimerStopped: false,
+          phase: GamePhase.EXPLORATION,
+        },
       });
       setError(null);
     } catch (err) {
@@ -57,6 +74,14 @@ export default function Home() {
       isActive: false,
       selectedQuestionSet: null,
       collectedLetters: {},
+      timerState: {
+        mainTimeRemaining: 600,
+        finalTimeRemaining: 120,
+        mainTimerStarted: Date.now(),
+        finalTimerStarted: null,
+        isTimerStopped: false,
+        phase: GamePhase.EXPLORATION,
+      },
     });
   };
 

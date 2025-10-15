@@ -1,8 +1,8 @@
 # Feature Specification: Game Time Limits with Dual Timer Display
 
-**Feature Branch**: `006-add-time-limit`  
-**Created**: 2025-10-15  
-**Status**: Draft  
+**Feature Branch**: `006-add-time-limit`
+**Created**: 2025-10-15
+**Status**: 🚧 Implementation Complete (E2E tests pending for US2-US5)
 **Input**: User description: "Add time limit to the game which should count down from the moment the game is started from 10 minutes to 0 and when that time is reached the 2 minute guessing timer will start counting down. this means we need to have 2 timers visually shown in the screen. Since this is an important component it should always be visible floating in the bottom right corner. I envision a floating panel with a slight shadow with the top of the panel containing the 10 minute timer and the bottom containing the 2 minute timer. For both of these timers the color of the text should change to red in the last 10 seconds. Of course the timer should visually update every second. When the 10 minute timer is up, it should no longer be possible to navigate through questions and the question and answer components should fade out to 20% opacity and be disabled. When the 2 minute timer ends without a valid answer this shows the "The time is up, you lost!" message. Whenever a valid final answer was given, the timer is stopped as well."
 
 ## User Scenarios & Testing *(mandatory)*

@@ -3,6 +3,42 @@
  */
 
 /**
+ * Defines the three distinct phases of gameplay that determine UI state and player capabilities.
+ */
+export enum GamePhase {
+  EXPLORATION = 'exploration',
+  FINAL_ANSWER = 'final_answer',
+  ENDED = 'ended'
+}
+
+/**
+ * Represents the current state of both countdown timers including remaining time, active phase, and urgency indicators.
+ *
+ * State invariants:
+ * - mainTimeRemaining must be between 0 and 600 (inclusive)
+ * - finalTimeRemaining must be between 0 and 120 (inclusive)
+ * - When phase is EXPLORATION, mainTimeRemaining > 0
+ * - When phase is FINAL_ANSWER, mainTimeRemaining === 0 and finalTimeRemaining > 0
+ * - When phase is ENDED, both timers must be 0 or isTimerStopped must be true
+ * - finalTimerStarted is null when mainTimeRemaining > 0
+ * - Once isTimerStopped is true, it cannot become false (immutable)
+ */
+export interface TimerState {
+  /** Seconds remaining on 10-minute main timer (0-600) */
+  mainTimeRemaining: number;
+  /** Seconds remaining on 2-minute final timer (0-120) */
+  finalTimeRemaining: number;
+  /** Unix epoch milliseconds when main timer started */
+  mainTimerStarted: number;
+  /** Unix epoch milliseconds when final timer started (null until main expires) */
+  finalTimerStarted: number | null;
+  /** Whether timers have been stopped (e.g., correct answer submitted) */
+  isTimerStopped: boolean;
+  /** Current game phase determining UI state and available actions */
+  phase: GamePhase;
+}
+
+/**
  * Result of validating a submitted answer
  *
  * Contains the validation status and normalized strings for both submitted
@@ -61,6 +97,7 @@ export type CollectedLetters = Record<number, string | null>;
  * - collectedLetters must contain entries for all 12 positions (1-12)
  * - When gameEnded is true, gameResult should be set
  * - finalAnswer is only populated after submission attempt
+ * - timerState tracks both timers and current game phase
  */
 export interface GameSession {
   isActive: boolean;
@@ -72,6 +109,8 @@ export interface GameSession {
   gameResult?: GameResult;
   /** Whether the game has ended (after final answer submission) */
   gameEnded?: boolean;
+  /** Timer state tracking both countdown timers and current game phase */
+  timerState: TimerState;
 }
 
 /**

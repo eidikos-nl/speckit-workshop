@@ -317,7 +317,7 @@ These are explicitly out of scope but documented for future features:
 
 ## Notes
 
-- The existing "Answer verification coming in a future update" text (line 62, QuestionDisplay.tsx) will be replaced with dynamic content:
+- The existing "Provide the correct answer and earn a letter..." text (line 62, QuestionDisplay.tsx) will be replaced with dynamic content:
   - Empty string when no answer submitted
   - "That is incorrect" when answer is wrong
   - Empty string again when answer is correct (green box is sufficient feedback)

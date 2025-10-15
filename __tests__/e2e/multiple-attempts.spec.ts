@@ -296,8 +296,8 @@ test.describe('Multiple Submission Attempts - User Story 3', () => {
     let text1 = await square1.textContent();
     expect(text1).toBe('.'); // Initially unanswered
 
-    // Answer Q1
-    await validationPage.submitAnswerViaButton('test');
+    // Answer Q1 with correct answer
+    await validationPage.submitCorrectAnswer();
     await page.waitForTimeout(200);
 
     // Q1 should now show a letter
@@ -315,8 +315,8 @@ test.describe('Multiple Submission Attempts - User Story 3', () => {
     let text2 = await square2.textContent();
     expect(text2).toBe('.');
 
-    // Answer Q2
-    await validationPage.submitAnswerViaButton('test');
+    // Answer Q2 with correct answer
+    await validationPage.submitCorrectAnswer();
     await page.waitForTimeout(200);
 
     // Q2 should now show a letter
@@ -343,8 +343,8 @@ test.describe('Multiple Submission Attempts - User Story 3', () => {
   });
 
   test('T021: Letters reset when starting a new game', async ({ page }) => {
-    // Answer Q1
-    await validationPage.submitAnswerViaButton('test');
+    // Answer Q1 with correct answer
+    await validationPage.submitCorrectAnswer();
     await page.waitForTimeout(200);
 
     // Q1 should show a letter
@@ -367,13 +367,13 @@ test.describe('Multiple Submission Attempts - User Story 3', () => {
   });
 
   test('T021: All letters reset on new game', async ({ page }) => {
-    // Answer multiple questions
+    // Answer multiple questions with correct answers
     for (let i = 0; i < 3; i++) {
       if (i > 0) {
         await validationPage.getQuestionSquare(i + 1).click();
         await page.waitForTimeout(200);
       }
-      await validationPage.submitAnswerViaButton(`test${i}`);
+      await validationPage.submitCorrectAnswer();
       await page.waitForTimeout(100);
     }
 

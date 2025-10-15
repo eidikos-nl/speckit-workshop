@@ -78,7 +78,7 @@ export function QuestionDisplay({
       {/* Question Text with smooth transitions */}
       <div className="bg-gray-50 rounded-lg p-6 min-h-[120px] flex items-center justify-center
                     transition-all duration-200 ease-in-out">
-        <p className="text-xl text-gray-800 text-center break-words">
+        <p className="text-xl text-gray-800 text-center break-words" data-testid="question-text">
           {question.question}
         </p>
       </div>

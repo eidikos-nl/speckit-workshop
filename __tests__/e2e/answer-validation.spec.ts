@@ -208,8 +208,8 @@ test.describe('Answer Validation - User Story 1', () => {
       expect(text).toBe('.');
     }
 
-    // Submit correct answer to Q1
-    await validationPage.submitAnswerViaButton('test');
+    // Submit correct answer to Q1 using the actual correct answer
+    await validationPage.submitCorrectAnswer();
     await page.waitForTimeout(200);
 
     // Q1 should now show a letter (not a period)

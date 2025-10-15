@@ -15,7 +15,7 @@ export class NavigationPage {
     this.page = page;
     this.nextChevron = page.getByTestId('next-chevron');
     this.previousChevron = page.getByTestId('previous-chevron');
-    this.currentQuestionDisplay = page.getByTestId('current-question-display');
+    this.currentQuestionDisplay = page.getByTestId('question-text');
     this.questionNumberDisplay = page.getByTestId('question-number-display');
   }
 

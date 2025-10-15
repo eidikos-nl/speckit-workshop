@@ -1,4 +1,6 @@
 import { Page, Locator } from '@playwright/test';
+import * as fs from 'fs';
+import * as path from 'path';
 
 /**
  * Page Object for answer validation interactions
@@ -9,12 +11,16 @@ export class AnswerValidationPage {
   readonly answerInput: Locator;
   readonly verifyButton: Locator;
   readonly validationFeedback: Locator;
+  readonly themeDisplay: Locator;
+  readonly questionDisplay: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.answerInput = page.getByTestId('answer-input');
     this.verifyButton = page.getByTestId('verify-button');
     this.validationFeedback = page.getByTestId('validation-feedback');
+    this.themeDisplay = page.getByTestId('theme-display');
+    this.questionDisplay = page.getByTestId('question-text');
   }
 
   /**
@@ -76,5 +82,72 @@ export class AnswerValidationPage {
   async feedbackContains(text: string): Promise<boolean> {
     const feedback = await this.getValidationFeedback();
     return feedback?.includes(text) ?? false;
+  }
+
+  /**
+   * Get the current theme displayed on the page
+   */
+  async getTheme(): Promise<string> {
+    const theme = await this.themeDisplay.textContent();
+    return theme?.trim() || '';
+  }
+
+  /**
+   * Get the current question text displayed on the page
+   */
+  async getQuestionText(): Promise<string> {
+    const questionText = await this.questionDisplay.textContent();
+    return questionText?.trim() || '';
+  }
+
+  /**
+   * Load all question sets from the question-sets directory
+   */
+  private loadQuestionSets(): any[] {
+    const questionSetsDir = path.join(process.cwd(), 'question-sets');
+    const files = fs.readdirSync(questionSetsDir).filter(f => f.endsWith('.json'));
+
+    return files.map(file => {
+      const filePath = path.join(questionSetsDir, file);
+      const content = fs.readFileSync(filePath, 'utf-8');
+      return JSON.parse(content);
+    });
+  }
+
+  /**
+   * Find the correct answer for the current question based on theme and question text
+   */
+  async getCorrectAnswer(): Promise<string> {
+    const theme = await this.getTheme();
+    const questionText = await this.getQuestionText();
+
+    // Load all question sets
+    const questionSets = this.loadQuestionSets();
+
+    // Find the question set matching the current theme
+    const matchingSet = questionSets.find(set => set.theme === theme);
+
+    if (!matchingSet) {
+      throw new Error(`No question set found with theme: ${theme}`);
+    }
+
+    // Find the question within the set
+    const question = matchingSet.questions.find((q: any) =>
+      q.question === questionText
+    );
+
+    if (!question) {
+      throw new Error(`No question found matching: ${questionText}`);
+    }
+
+    return question.answer;
+  }
+
+  /**
+   * Submit the correct answer for the current question
+   */
+  async submitCorrectAnswer(): Promise<void> {
+    const correctAnswer = await this.getCorrectAnswer();
+    await this.submitAnswerViaButton(correctAnswer);
   }
 }

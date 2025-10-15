@@ -1,8 +1,8 @@
 # Feature Specification: Answer Validation
 
-**Feature Branch**: `003-validate-answers-when`  
-**Created**: 2025-10-15  
-**Status**: Draft  
+**Feature Branch**: `003-validate-answers-when`
+**Created**: 2025-10-15
+**Status**: ✅ Complete (2025-10-16)
 **Input**: User description: "validate answers. When the player provides an answer using the enter your answer input, when pressing enter or clicking the verify answer button the answer should be checked against the answer. It is imperative that casing is not important in the answer. When the answer is correct it should be shown by modifying the correlating box (which is also a button to navigate to that answer) to a nice green color including a nice animation."
 
 ## User Scenarios & Testing *(mandatory)*

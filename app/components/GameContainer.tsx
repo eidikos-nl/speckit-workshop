@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { GameSession } from '@/lib/types';
 import { canNavigateNext, canNavigatePrevious } from '@/lib/navigationLogic';
+import { validateAnswer } from '@/lib/validationLogic';
 import { QuestionDisplay } from './QuestionDisplay';
 import { QuestionGrid } from './QuestionGrid';
 
@@ -18,6 +19,10 @@ interface GameContainerProps {
 export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
   // T019: Navigation state management using useState
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
+  // T006: Track which questions have been correctly answered
+  // Uses Set<string> where each element is a question ID
+  const [answeredQuestions, setAnsweredQuestions] = useState<Set<string>>(new Set());
 
   // Guard: Only render if game is active with a valid question set
   if (!gameSession.isActive || !gameSession.selectedQuestionSet) {
@@ -50,6 +55,19 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
     if (index >= 0 && index < totalQuestions) {
       setCurrentQuestionIndex(index);
     }
+  };
+
+  // T007: Handler for answer submission
+  // Validates the submitted answer against the correct answer
+  // Returns true if correct, false if incorrect
+  // Updates answeredQuestions state if answer is correct
+  const handleAnswerSubmit = (answer: string): boolean => {
+    const validationResult = validateAnswer(answer, currentQuestion.answer);
+    if (validationResult.isCorrect) {
+      // Add question ID to answered questions set
+      setAnsweredQuestions(prev => new Set(prev).add(currentQuestion.id));
+    }
+    return validationResult.isCorrect;
   };
 
   return (
@@ -116,18 +134,23 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
 
       {/* T021: QuestionDisplay integrated to show current question */}
       {/* T046: Key prop ensures input clears on navigation */}
+      {/* T012: Pass handleAnswerSubmit callback to QuestionDisplay */}
       <QuestionDisplay
         key={currentQuestionIndex}
         question={currentQuestion}
         questionNumber={currentQuestionIndex + 1}
         totalQuestions={totalQuestions}
+        onAnswerSubmit={handleAnswerSubmit}
       />
 
       {/* T034: QuestionGrid integrated with onSelectQuestion handler - moved below answer input */}
+      {/* T013: Pass answeredQuestions state to QuestionGrid */}
       <QuestionGrid
         currentQuestionIndex={currentQuestionIndex}
         totalQuestions={totalQuestions}
         onSelectQuestion={handleSelectQuestion}
+        answeredQuestions={answeredQuestions}
+        questions={questions}
       />
 
       {/* Stop Game Button */}

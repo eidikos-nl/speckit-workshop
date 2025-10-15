@@ -3,6 +3,18 @@
  */
 
 /**
+ * Result of validating a submitted answer
+ *
+ * Contains the validation status and normalized strings for both submitted
+ * and correct answers (useful for debugging and logging)
+ */
+export interface AnswerValidationResult {
+  isCorrect: boolean;
+  normalizedSubmitted: string;
+  normalizedCorrect: string;
+}
+
+/**
  * Represents a single general knowledge question
  */
 export interface Question {

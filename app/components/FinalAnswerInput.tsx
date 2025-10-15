@@ -40,11 +40,13 @@ export function FinalAnswerInput({
   // T025: Track local focus/position state for active box indicator
   const [focusPosition, setFocusPosition] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  // Track whether the component has focus to prevent capturing keyboard input globally
+  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   // T021: Handle keyboard input for letter entry
   useEffect(() => {
-    if (gameEnded) {
-      return; // T030: Disable input handling when game has ended
+    if (gameEnded || !isFocused) {
+      return; // T030: Disable input handling when game has ended or component is not focused
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -80,26 +82,46 @@ export function FinalAnswerInput({
       }
     };
 
-    // Add focus listener to container for click-to-focus functionality
-    const handleContainerClick = () => {
-      setFocusPosition(Math.min(value.length, 11)); // Position at next available or last box
-    };
-
-    const currentContainer = containerRef.current;
     window.addEventListener('keydown', handleKeyDown);
-    currentContainer?.addEventListener('click', handleContainerClick);
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      currentContainer?.removeEventListener('click', handleContainerClick);
     };
-  }, [value, onChange, onSubmit, gameEnded]);
+  }, [value, onChange, onSubmit, gameEnded, isFocused]);
 
   const isComplete = value.length === 12;
   const isWin = gameResult?.outcome === 'win';
 
+  // Handle focus event to enable keyboard capture
+  const handleFocus = () => {
+    if (!gameEnded) {
+      setIsFocused(true);
+      setFocusPosition(Math.min(value.length, 11));
+    }
+  };
+
+  // Handle blur event to disable keyboard capture
+  const handleBlur = () => {
+    setIsFocused(false);
+    setFocusPosition(null);
+  };
+
+  // Handle click on container to focus it
+  const handleContainerClick = () => {
+    if (!gameEnded && containerRef.current) {
+      containerRef.current.focus();
+    }
+  };
+
   return (
-    <div className="space-y-4" ref={containerRef}>
+    <div 
+      className="space-y-4 outline-none" 
+      ref={containerRef}
+      tabIndex={gameEnded ? -1 : 0}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      onClick={handleContainerClick}
+    >
       {/* 12-box grid for letter display */}
       <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-12 gap-3 sm:gap-4 md:gap-6">
         {Array.from({ length: 12 }).map((_, index) => {

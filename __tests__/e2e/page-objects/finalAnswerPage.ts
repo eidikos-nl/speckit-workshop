@@ -71,6 +71,15 @@ export class FinalAnswerPage extends BasePage {
   }
 
   /**
+   * Focus the final answer component to enable keyboard input
+   */
+  async focusFinalAnswer(): Promise<void> {
+    await this.getBox(1).click();
+    // Wait a brief moment for focus to be established
+    await this.page.waitForTimeout(50);
+  }
+
+  /**
    * Types a single character
    * @param char - Character to type
    */
@@ -79,6 +88,7 @@ export class FinalAnswerPage extends BasePage {
       throw new Error('Character must be a single character');
     }
     await this.waitForBoxesReady();
+    await this.focusFinalAnswer();
     await this.page.keyboard.type(char);
   }
 
@@ -91,6 +101,7 @@ export class FinalAnswerPage extends BasePage {
       throw new Error('Answer cannot exceed 12 characters');
     }
     await this.waitForBoxesReady();
+    await this.focusFinalAnswer();
     await this.page.keyboard.type(answer);
   }
 

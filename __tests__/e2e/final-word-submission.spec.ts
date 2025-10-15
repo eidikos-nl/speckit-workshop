@@ -42,7 +42,8 @@ test.describe('User Story 1: Submit Final Answer', () => {
   test('US1-03: Should enable submit button when 12 characters entered', async ({ page }) => {
     const submitButton = page.locator('[data-testid="final-answer-submit"]');
 
-    // Start typing 12 characters
+    // Focus and start typing 12 characters
+    await page.locator('[data-testid="final-answer-box-1"]').click();
     await page.keyboard.type('ABCDEFGHIJKL');
 
     // Button should now be enabled
@@ -70,7 +71,8 @@ test.describe('User Story 1: Submit Final Answer', () => {
   });
 
   test('US1-05: Should submit incorrect answer and show red loss state', async ({ page }) => {
-    // Type an intentionally wrong 12-letter word
+    // Focus and type an intentionally wrong 12-letter word
+    await page.locator('[data-testid="final-answer-box-1"]').click();
     await page.keyboard.type('WRONGWORDHERE');
 
     // Click submit button
@@ -92,7 +94,8 @@ test.describe('User Story 1: Submit Final Answer', () => {
   });
 
   test('US1-06: Should prevent input after game ends', async ({ page }) => {
-    // Type answer and submit
+    // Focus and type answer and submit
+    await page.locator('[data-testid="final-answer-box-1"]').click();
     await page.keyboard.type('TESTWORDABCDE');
     const submitButton = page.locator('[data-testid="final-answer-submit"]');
     await submitButton.click();
@@ -118,7 +121,8 @@ test.describe('User Story 1: Submit Final Answer', () => {
     const submitButton = page.locator('[data-testid="final-answer-submit"]');
     await expect(submitButton).toBeVisible();
 
-    // Type answer and submit
+    // Focus and type answer and submit
+    await page.locator('[data-testid="final-answer-box-1"]').click();
     await page.keyboard.type('TESTWORDABCDE');
     await submitButton.click();
 
@@ -133,7 +137,8 @@ test.describe('User Story 1: Submit Final Answer', () => {
 
 test.describe('User Story 2: Letter-by-Letter Input', () => {
   test('US2-01: Should add letters sequentially as typed', async ({ page }) => {
-    // Type first 3 letters
+    // Focus and type first 3 letters
+    await page.locator('[data-testid="final-answer-box-1"]').click();
     await page.keyboard.type('ABC');
 
     // Verify boxes show letters
@@ -147,7 +152,8 @@ test.describe('User Story 2: Letter-by-Letter Input', () => {
   });
 
   test('US2-02: Should convert lowercase to uppercase', async ({ page }) => {
-    // Type lowercase letters
+    // Focus and type lowercase letters
+    await page.locator('[data-testid="final-answer-box-1"]').click();
     await page.keyboard.type('abc');
 
     // Verify boxes show uppercase
@@ -161,7 +167,8 @@ test.describe('User Story 2: Letter-by-Letter Input', () => {
   });
 
   test('US2-03: Should prevent input beyond 12 characters', async ({ page }) => {
-    // Type 15 characters (should stop at 12)
+    // Focus and type 15 characters (should stop at 12)
+    await page.locator('[data-testid="final-answer-box-1"]').click();
     await page.keyboard.type('ABCDEFGHIJKLMNOPQRST');
 
     // Count filled boxes
@@ -179,7 +186,8 @@ test.describe('User Story 2: Letter-by-Letter Input', () => {
   });
 
   test('US2-04: Should remove last character on backspace', async ({ page }) => {
-    // Type 5 characters
+    // Focus and type 5 characters
+    await page.locator('[data-testid="final-answer-box-1"]').click();
     await page.keyboard.type('ABCDE');
 
     // Verify 5 boxes are filled
@@ -196,7 +204,8 @@ test.describe('User Story 2: Letter-by-Letter Input', () => {
   });
 
   test('US2-05: Should handle multiple backspaces', async ({ page }) => {
-    // Type 5 characters
+    // Focus and type 5 characters
+    await page.locator('[data-testid="final-answer-box-1"]').click();
     await page.keyboard.type('ABCDE');
 
     // Press backspace 3 times
@@ -215,7 +224,8 @@ test.describe('User Story 2: Letter-by-Letter Input', () => {
   });
 
   test('US2-06: Should handle Enter key to submit when 12 characters present', async ({ page }) => {
-    // Type exactly 12 characters
+    // Focus and type exactly 12 characters
+    await page.locator('[data-testid="final-answer-box-1"]').click();
     await page.keyboard.type('ABCDEFGHIJKL');
 
     // Press Enter
@@ -227,7 +237,8 @@ test.describe('User Story 2: Letter-by-Letter Input', () => {
   });
 
   test('US2-07: Should ignore non-letter characters', async ({ page }) => {
-    // Type letters with special characters mixed in
+    // Focus and type letters with special characters mixed in
+    await page.locator('[data-testid="final-answer-box-1"]').click();
     await page.keyboard.type('A1B2C!D@E');
 
     // Only letters should be entered
@@ -245,7 +256,8 @@ test.describe('User Story 2: Letter-by-Letter Input', () => {
   });
 
   test('US2-08: Should show focus indicator on active box', async ({ page }) => {
-    // Type one character (focus should move to second box)
+    // Focus and type one character (focus should move to second box)
+    await page.locator('[data-testid="final-answer-box-1"]').click();
     await page.keyboard.type('A');
 
     // The first box should now have focus styling (ring)
@@ -322,7 +334,8 @@ test.describe('Accessibility', () => {
   });
 
   test('ACC-03: Result message should be visible to screen readers', async ({ page }) => {
-    // Type and submit
+    // Focus and type and submit
+    await page.locator('[data-testid="final-answer-box-1"]').click();
     await page.keyboard.type('TESTWORDABCDE');
     const submitButton = page.locator('[data-testid="final-answer-submit"]');
     await submitButton.click();

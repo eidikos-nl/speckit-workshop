@@ -59,11 +59,19 @@ export type CollectedLetters = Record<number, string | null>;
  * - When isActive is true, selectedQuestionSet must not be null
  * - When isActive is false, selectedQuestionSet may be null
  * - collectedLetters must contain entries for all 12 positions (1-12)
+ * - When gameEnded is true, gameResult should be set
+ * - finalAnswer is only populated after submission attempt
  */
 export interface GameSession {
   isActive: boolean;
   selectedQuestionSet: QuestionSet | null;
   collectedLetters: CollectedLetters;
+  /** Optional final answer submitted by the player (populated during entry) */
+  finalAnswer?: FinalAnswer;
+  /** Optional result of the final word submission (populated after submission) */
+  gameResult?: GameResult;
+  /** Whether the game has ended (after final answer submission) */
+  gameEnded?: boolean;
 }
 
 /**
@@ -84,15 +92,47 @@ export type ValidationResult =
   | { valid: false; errors: string[] };
 
 /**
+ * Represents the final answer submitted by the player
+ *
+ * Contains the 12-letter word, its position in the game, and submission metadata.
+ */
+export interface FinalAnswer {
+  /** The 12-letter word submitted by the player */
+  value: string;
+  /** Position of this submission (for potential future versioning) */
+  position: number;
+  /** Whether the answer has been submitted for validation */
+  submitted: boolean;
+  /** Timestamp of when the answer was submitted (ISO 8601 format) */
+  timestamp: string;
+}
+
+/**
+ * Represents the outcome of the final word submission
+ *
+ * Tracks the game result, correct answer, player's answer, and submission timestamp.
+ */
+export interface GameResult {
+  /** 'win' if the submitted answer matches the target word, 'loss' otherwise */
+  outcome: 'win' | 'loss';
+  /** The correct 12-letter answer from the game's question set */
+  correctAnswer: string;
+  /** The answer submitted by the player for final comparison */
+  playerAnswer: string;
+  /** Timestamp of when the result was determined (ISO 8601 format) */
+  timestamp: string;
+}
+
+/**
  * Validates a QuestionSet against all business rules
- * 
+ *
  * Rules:
  * - Must have exactly 12 questions
  * - Theme must be non-empty
  * - Target word must be exactly 12 letters
  * - Each question must have all required fields
  * - Each revealed letter must be exactly 1 character
- * 
+ *
  * @param questionSet - The question set to validate
  * @returns ValidationResult indicating success or specific errors
  */

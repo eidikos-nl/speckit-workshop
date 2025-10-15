@@ -1,8 +1,8 @@
 # Feature Specification: Final Word Submission
 
-**Feature Branch**: `005-final-word-submission`  
-**Created**: 2025-10-15  
-**Status**: Draft  
+**Feature Branch**: `005-final-word-submission`
+**Created**: 2025-10-15
+**Status**: Complete (2025-10-15)
 **Input**: User description: "final word submission. The player must now be allowed to submit the final word. Which is as you might remember a 12 letter word. There currently should not be any limitations as to when the player can enter this word. However when the player does enter the word and does submit his "final answer" the game ends, wether the answer is correct or not. Visually there should be visual subtle spacer between the 12 question boxes already on the screen. Below that spacer there should be another 12 question boxes with the same styling as the individual (empty) question boxes. So this means there is no simple "input field" but when the player selects one of the boxes there should be a cursor in the first box and when typing the letters should appear one by one in each box with a maximum of 12. The backspace should remove one again. In other words it should act like an input field with a max length of 12 characters but split over 12 styled boxes. This follows the behaviour of how some apps implement a OTP input field. When the answer is correct all boxes should get the same correct green color with a new message that the player has won the game. If the answer is incorrect the boxes should become "all red" and the message showing "That is incorrect, try again in a new game""
 
 ## User Scenarios & Testing *(mandatory)*

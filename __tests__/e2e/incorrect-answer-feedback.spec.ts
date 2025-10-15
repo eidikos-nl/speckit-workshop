@@ -17,8 +17,7 @@ test.describe('Incorrect Answer Feedback - User Story 2', () => {
     validationPage = new AnswerValidationPage(page);
 
     // Navigate to the game and start it
-    await page.goto('/');
-    await gamePage.startGame();
+    await gamePage.navigateAndStartGame();
 
     // Wait for game to be active
     await expect(gamePage.stopButton).toBeVisible();
@@ -82,12 +81,11 @@ test.describe('Incorrect Answer Feedback - User Story 2', () => {
     let feedback = await validationPage.getValidationFeedback();
     expect(feedback).toContain('That is incorrect');
 
-    // Delete a character from input
-    const input = validationPage.answerInput;
-    await input.press('End'); // Move to end
-    await input.press('Backspace'); // Delete last char
+    // Clear the input and type a new character to trigger input change
+    await validationPage.clearInput();
+    await validationPage.answerInput.type('w');
 
-    await page.waitForTimeout(50);
+    await page.waitForTimeout(100);
 
     // Feedback should be cleared
     feedback = await validationPage.getValidationFeedback();

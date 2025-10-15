@@ -16,8 +16,7 @@ test.describe('Sequential Navigation', () => {
     navPage = new NavigationPage(page);
     
     // Navigate to the game and start it
-    await page.goto('/');
-    await gamePage.startGame();
+    await gamePage.navigateAndStartGame();
     
     // Wait for game to be active
     await expect(gamePage.stopButton).toBeVisible();

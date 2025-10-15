@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { GameSession, CollectedLetters } from '@/lib/types';
+import { GameSession, CollectedLetters, GameResult } from '@/lib/types';
 import { canNavigateNext, canNavigatePrevious } from '@/lib/navigationLogic';
-import { validateAnswer } from '@/lib/validationLogic';
+import { validateAnswer, validateFinalAnswer } from '@/lib/validationLogic';
 import { QuestionDisplay } from './QuestionDisplay';
 import { QuestionGrid } from './QuestionGrid';
+import { FinalAnswerInput } from './FinalAnswerInput';
 
 interface GameContainerProps {
   gameSession: GameSession;
@@ -29,6 +30,15 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
     gameSession.collectedLetters
   );
 
+  // T007: Track the final answer value (12-character string for final submission)
+  const [finalAnswer, setFinalAnswer] = useState<string>('');
+
+  // T008: Track whether the game has ended (after final answer submission)
+  const [gameEnded, setGameEnded] = useState<boolean>(false);
+
+  // T009: Track the result of the final answer submission (win/loss outcome)
+  const [gameResult, setGameResult] = useState<GameResult | null>(null);
+
   // Guard: Only render if game is active with a valid question set
   if (!gameSession.isActive || !gameSession.selectedQuestionSet) {
     return null;
@@ -41,6 +51,21 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
   // Compute navigation capabilities
   const canGoNext = canNavigateNext(currentQuestionIndex, totalQuestions);
   const canGoPrevious = canNavigatePrevious(currentQuestionIndex);
+
+  // T013: Handler for final answer submission
+  // Validates the submitted answer, determines win/loss outcome, and ends the game
+  // Includes submission guard to prevent duplicate clicks
+  const handleFinalAnswerSubmit = () => {
+    if (gameEnded || !gameSession.selectedQuestionSet) {
+      return; // Prevent duplicate submissions
+    }
+
+    const { targetWord } = gameSession.selectedQuestionSet;
+    const result = validateFinalAnswer(finalAnswer, targetWord);
+
+    setGameResult(result);
+    setGameEnded(true);
+  };
 
   // T020: Navigation handlers
   const handleNext = () => {
@@ -181,6 +206,19 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
         collectedLetters={collectedLetters}
       />
 
+      {/* T031: Add subtle visual spacer between QuestionGrid and FinalAnswerInput */}
+      <div className="border-t border-gray-200 py-6"></div>
+
+      {/* T018: Integrate FinalAnswerInput below QuestionGrid */}
+      {/* T014-T017: FinalAnswerInput handles win/loss visual feedback and messaging */}
+      {/* T032: FinalAnswerInput uses identical styling to QuestionGrid (aspect-square, rounded-lg, border-2, transitions) */}
+      <FinalAnswerInput
+        value={finalAnswer}
+        onChange={setFinalAnswer}
+        onSubmit={handleFinalAnswerSubmit}
+        gameEnded={gameEnded}
+        gameResult={gameResult}
+      />
     </div>
   );
 }

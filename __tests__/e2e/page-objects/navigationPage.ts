@@ -1,18 +1,18 @@
 import { Page, Locator } from '@playwright/test';
+import { BasePage } from './basePage';
 
 /**
  * Page Object for navigation-related elements
  * Provides reusable selectors and actions for E2E tests
  */
-export class NavigationPage {
-  readonly page: Page;
+export class NavigationPage extends BasePage {
   readonly nextChevron: Locator;
   readonly previousChevron: Locator;
   readonly currentQuestionDisplay: Locator;
   readonly questionNumberDisplay: Locator;
   
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.nextChevron = page.getByTestId('next-chevron');
     this.previousChevron = page.getByTestId('previous-chevron');
     this.currentQuestionDisplay = page.getByTestId('question-text');

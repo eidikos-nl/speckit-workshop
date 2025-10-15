@@ -19,9 +19,8 @@ test.describe('Answer Validation - User Story 1', () => {
     gamePage = new GamePage(page);
     validationPage = new AnswerValidationPage(page);
 
-    // Navigate to the game and start it
-    await page.goto('/');
-    await gamePage.startGame();
+    // Navigate to the game and start it using the base page method
+    await gamePage.navigateAndStartGame();
 
     // Wait for game to be active
     await expect(gamePage.stopButton).toBeVisible();

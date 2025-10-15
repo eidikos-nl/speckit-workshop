@@ -5,7 +5,7 @@
  * Pure functions that can be unit tested independently of React components.
  */
 
-import { CollectedLetters } from './types';
+import { CollectedLetters, GameResult } from './types';
 
 export interface AnswerValidationResult {
   isCorrect: boolean;
@@ -105,4 +105,48 @@ export function isAnsweredCorrectly(
   collectedLetters: CollectedLetters
 ): boolean {
   return collectedLetters[questionNumber] !== null && collectedLetters[questionNumber] !== undefined;
+}
+
+/**
+ * Validates a submitted final answer against the correct target word
+ *
+ * Performs case-insensitive comparison after normalization.
+ * Returns a GameResult object containing win/loss outcome, both answers, and timestamp.
+ *
+ * @param submittedAnswer - The 12-letter word submitted by the player
+ * @param correctAnswer - The target word from the question set
+ * @returns GameResult with validation outcome and metadata
+ *
+ * @example
+ * validateFinalAnswer('CONSTELLATION', 'Constellation')
+ * // returns {
+ * //   outcome: 'win',
+ * //   correctAnswer: 'constellation',
+ * //   playerAnswer: 'constellation',
+ * //   timestamp: '2025-10-15T22:30:45.123Z'
+ * // }
+ *
+ * validateFinalAnswer('INCORRECTWORD', 'Constellation')
+ * // returns {
+ * //   outcome: 'loss',
+ * //   correctAnswer: 'constellation',
+ * //   playerAnswer: 'incorrectword',
+ * //   timestamp: '2025-10-15T22:30:45.123Z'
+ * // }
+ */
+export function validateFinalAnswer(
+  submittedAnswer: string,
+  correctAnswer: string
+): GameResult {
+  const normalizedSubmitted = normalizeAnswer(submittedAnswer);
+  const normalizedCorrect = normalizeAnswer(correctAnswer);
+
+  const isWin = normalizedSubmitted === normalizedCorrect;
+
+  return {
+    outcome: isWin ? 'win' : 'loss',
+    correctAnswer: normalizedCorrect,
+    playerAnswer: normalizedSubmitted,
+    timestamp: new Date().toISOString(),
+  };
 }

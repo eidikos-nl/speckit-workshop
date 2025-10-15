@@ -1,25 +1,23 @@
 import { Page, Locator } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
+import { BasePage } from './basePage';
 
 /**
  * Page Object for answer validation interactions
  * Provides reusable selectors and actions for answer validation E2E tests
  */
-export class AnswerValidationPage {
-  readonly page: Page;
+export class AnswerValidationPage extends BasePage {
   readonly answerInput: Locator;
   readonly verifyButton: Locator;
   readonly validationFeedback: Locator;
-  readonly themeDisplay: Locator;
   readonly questionDisplay: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.answerInput = page.getByTestId('answer-input');
     this.verifyButton = page.getByTestId('verify-button');
     this.validationFeedback = page.getByTestId('validation-feedback');
-    this.themeDisplay = page.getByTestId('theme-display');
     this.questionDisplay = page.getByTestId('question-text');
   }
 
@@ -85,10 +83,10 @@ export class AnswerValidationPage {
   }
 
   /**
-   * Get the current theme displayed on the page
+   * Get the current theme displayed on the page (inherited from BasePage as getThemeText)
    */
   async getTheme(): Promise<string> {
-    const theme = await this.themeDisplay.textContent();
+    const theme = await this.getThemeText();
     return theme?.trim() || '';
   }
 
@@ -149,5 +147,24 @@ export class AnswerValidationPage {
   async submitCorrectAnswer(): Promise<void> {
     const correctAnswer = await this.getCorrectAnswer();
     await this.submitAnswerViaButton(correctAnswer);
+  }
+
+  /**
+   * Get the main answer (final word) for the current question set based on theme
+   */
+  async getMainAnswer(): Promise<string> {
+    const theme = await this.getTheme();
+
+    // Load all question sets
+    const questionSets = this.loadQuestionSets();
+
+    // Find the question set matching the current theme
+    const matchingSet = questionSets.find(set => set.theme === theme);
+
+    if (!matchingSet) {
+      throw new Error(`No question set found with theme: ${theme}`);
+    }
+
+    return matchingSet.mainAnswer;
   }
 }

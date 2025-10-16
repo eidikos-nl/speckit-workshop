@@ -18,7 +18,8 @@ npm test [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES][ONLY COMMANDS FOR ACTIVE TECHNO
 TypeScript 5.x with Next.js 14+ (App Router): Follow standard conventions
 
 ## Recent Changes
-- 006-add-time-limit Added time tracking
+- 007-implement-scoring-system: Added [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
+- 007-implement-scoring-system
 
 <!-- MANUAL ADDITIONS START -->
 ```

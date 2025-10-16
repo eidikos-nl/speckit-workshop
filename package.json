@@ -10,7 +10,9 @@
     "test:unit": "jest",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "test:all": "pnpm test:unit && pnpm test:e2e"
+    "test:all": "pnpm test:unit && pnpm test:e2e",
+    "update:claude:tree": "./scripts/update-claude-tree.sh",
+    "run:claude:tree": "npm run update:claude:tree && claude"
   },
   "dependencies": {
     "next": "^15.0.0",

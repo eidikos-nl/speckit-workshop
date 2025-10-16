@@ -98,6 +98,8 @@ export type CollectedLetters = Record<number, string | null>;
  * - When gameEnded is true, gameResult should be set
  * - finalAnswer is only populated after submission attempt
  * - timerState tracks both timers and current game phase
+ * - currentScore must be >= 0 and <= 1200
+ * - isFailed is false by default; becomes true only if final word guess fails
  */
 export interface GameSession {
   isActive: boolean;
@@ -111,6 +113,10 @@ export interface GameSession {
   gameEnded?: boolean;
   /** Timer state tracking both countdown timers and current game phase */
   timerState: TimerState;
+  /** Running point total accumulated throughout the game session (0-1200) */
+  currentScore: number;
+  /** Whether the final word guess failed (true = loss, false = win or still playing) */
+  isFailed: boolean;
 }
 
 /**
@@ -210,4 +216,76 @@ export function validateQuestionSet(questionSet: QuestionSet): ValidationResult 
   }
 
   return errors.length === 0 ? { valid: true } : { valid: false, errors };
+}
+
+/**
+ * Result of score validation
+ */
+export interface ScoreValidation {
+  isValid: boolean;
+  errors: string[];
+}
+
+/**
+ * Validates a score value against business rules
+ *
+ * Rules:
+ * - Must be an integer (no decimals)
+ * - Must be >= 0 (non-negative)
+ * - Must be <= 1200 (theoretical maximum)
+ *
+ * @param score - The score value to validate
+ * @returns ScoreValidation object with validation result
+ */
+export function validateScore(score: number): ScoreValidation {
+  const errors: string[] = [];
+
+  if (!Number.isInteger(score)) {
+    errors.push('Score must be an integer');
+  }
+  if (score < 0) {
+    errors.push('Score cannot be negative');
+  }
+  if (score > 1200) {
+    errors.push('Score exceeds theoretical maximum of 1200');
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors
+  };
+}
+
+/**
+ * Validates a GameResult including final score calculation
+ *
+ * Rules:
+ * - If outcome is 'loss', finalScore must be 0
+ * - finalScore must be an integer
+ * - finalScore must be >= 0
+ * - finalScore must be <= 1200
+ *
+ * @param result - The GameResult to validate
+ * @returns ScoreValidation object with validation result
+ */
+export function validateGameResult(result: GameResult & { finalScore: number }): ScoreValidation {
+  const errors: string[] = [];
+
+  if (result.outcome === 'loss' && result.finalScore !== 0) {
+    errors.push('Final score must be 0 for loss outcome');
+  }
+  if (!Number.isInteger(result.finalScore)) {
+    errors.push('Final score must be an integer');
+  }
+  if (result.finalScore < 0) {
+    errors.push('Final score cannot be negative');
+  }
+  if (result.finalScore > 1200) {
+    errors.push('Final score exceeds theoretical maximum of 1200');
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors
+  };
 }

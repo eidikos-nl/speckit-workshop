@@ -1,7 +1,6 @@
 import {
   normalizeAnswer,
   validateAnswer,
-  AnswerValidationResult,
   getDisplayLetter,
   isAnsweredCorrectly,
 } from '@/lib/validationLogic';
@@ -333,7 +332,6 @@ describe('getDisplayLetter', () => {
 
   describe('All 12 question positions', () => {
     it('correctly displays letters for all positions 1-12', () => {
-      const targetWord = 'SPECTRALISM';
       const letters: CollectedLetters = {
         1: 'S',
         2: 'P',
@@ -587,9 +585,10 @@ describe('isAnsweredCorrectly', () => {
         12: null,
       };
 
-      const answeredCount = Array.from({ length: 12 }, (_, i) =>
-        isAnsweredCorrectly(i + 1, letters) ? 1 : 0
-      ).reduce((a, b) => a + b, 0);
+      // Fix the TypeScript error by explicitly typing the array and using Array.from with a more specific type
+      const answeredCount = (Array.from({ length: 12 } as { length: 12 }, (_, i) => {
+        return isAnsweredCorrectly(i + 1, letters) ? 1 : 0;
+      }) as number[]).reduce((a, b) => a + b, 0);
 
       expect(answeredCount).toBe(6);
     });

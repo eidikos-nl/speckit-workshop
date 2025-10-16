@@ -4,10 +4,12 @@ import { useState, useCallback } from 'react';
 import { GameSession, CollectedLetters, GameResult } from '@/lib/types';
 import { canNavigateNext, canNavigatePrevious } from '@/lib/navigationLogic';
 import { validateAnswer, validateFinalAnswer } from '@/lib/validationLogic';
+import { calculateAnswerScore, addTimeBonus, calculateFinalScore } from '@/lib/scoringLogic';
 import { QuestionDisplay } from './QuestionDisplay';
 import { QuestionGrid } from './QuestionGrid';
 import { FinalAnswerInput } from './FinalAnswerInput';
 import { TimerPanel } from './TimerPanel';
+import { ScorePanel } from './ScorePanel';
 import { useGameTimer } from '../hooks/useGameTimer';
 
 interface GameContainerProps {
@@ -41,6 +43,12 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
   // Track the result of the final answer submission (win/loss outcome)
   const [gameResult, setGameResult] = useState<GameResult | null>(null);
 
+  // Track the current accumulated score throughout the game
+  const [currentScore, setCurrentScore] = useState<number>(0);
+
+  // Track whether the final word guess failed (used for all-or-nothing penalty)
+  const [isFailed, setIsFailed] = useState<boolean>(false);
+
   // Callback when final timer expires - set game result to loss
   const handleFinalTimerExpire = useCallback(() => {
     if (!gameSession.selectedQuestionSet || gameEnded) {
@@ -48,6 +56,10 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
     }
 
     const { targetWord } = gameSession.selectedQuestionSet;
+
+    // Apply all-or-nothing penalty: reset score to 0 on timeout
+    setCurrentScore(0);
+    setIsFailed(true);
 
     // Set game result to loss with correct answer and incomplete player answer
     setGameResult({
@@ -93,6 +105,7 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
 
   // Handler for final answer submission
   // Validates the submitted answer, determines win/loss outcome, and ends the game
+  // Applies scoring: +time bonus if correct, 0 if incorrect (all-or-nothing)
   // Includes submission guard to prevent duplicate clicks
   const handleFinalAnswerSubmit = () => {
     if (gameEnded || !gameSession.selectedQuestionSet) {
@@ -105,7 +118,30 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
     // Stop timer when final answer is submitted (both correct and incorrect)
     timerState.stopTimer();
 
-    setGameResult(result);
+    // Apply final word scoring
+    const isCorrect = result.outcome === 'win';
+    let finalScore = currentScore;
+
+    if (isCorrect) {
+      // Correct final word: add time bonus and keep score
+      finalScore = addTimeBonus(currentScore, timerState.finalTimeRemaining);
+      setIsFailed(false);
+    } else {
+      // Incorrect final word: reset score to 0 (all-or-nothing penalty)
+      finalScore = 0;
+      setIsFailed(true);
+    }
+
+    // Update the current score with final calculation
+    setCurrentScore(finalScore);
+
+    // Create result with final score
+    const resultWithScore = {
+      ...result,
+      finalScore,
+    };
+
+    setGameResult(resultWithScore as GameResult & { finalScore: number });
     setGameEnded(true);
   };
 
@@ -134,9 +170,15 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
   // Returns true if correct, false if incorrect
   // Updates answeredQuestions state if answer is correct
   // Collects letter when answer is correct
+  // Updates score: +10 for correct, -1 for incorrect (min 0)
   // Transitions to FINAL_ANSWER phase when all 12 questions are answered
   const handleAnswerSubmit = (answer: string): boolean => {
     const validationResult = validateAnswer(answer, currentQuestion.answer);
+
+    // Update score based on answer correctness
+    const newScore = calculateAnswerScore(validationResult.isCorrect, currentScore);
+    setCurrentScore(newScore);
+
     if (validationResult.isCorrect) {
       // Add question ID to answered questions set
       const updatedAnsweredQuestions = new Set(answeredQuestions).add(currentQuestion.id);
@@ -152,6 +194,9 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
       // When all 12 questions are answered, transition to FINAL_ANSWER phase
       if (updatedAnsweredQuestions.size === 12) {
         timerState.transitionToFinalAnswer();
+        // Apply time bonus for completing all 12 questions before timer expired
+        const mainBonus = addTimeBonus(newScore, timerState.mainTimeRemaining);
+        setCurrentScore(mainBonus);
       }
     }
     return validationResult.isCorrect;
@@ -275,6 +320,7 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
         onSubmit={handleFinalAnswerSubmit}
         gameEnded={gameEnded}
         gameResult={gameResult}
+        currentScore={currentScore}
       />
 
       {/* Integrate TimerPanel component with timer state */}
@@ -284,6 +330,9 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
         phase={timerState.phase}
         isTimerStopped={timerState.isTimerStopped}
       />
+
+      {/* Integrate ScorePanel component to display current score */}
+      <ScorePanel score={currentScore} dataTestId="score-panel" />
     </div>
   );
 }

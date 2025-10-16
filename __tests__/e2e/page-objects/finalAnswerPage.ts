@@ -337,4 +337,44 @@ export class FinalAnswerPage extends BasePage {
     const mainAnswer = await this.getMainAnswer();
     await this.submitAnswer(mainAnswer);
   }
+
+  /**
+   * Type the correct final word/answer for the current question set
+   */
+  async typeCorrectFinalWord(): Promise<void> {
+    const mainAnswer = await this.getMainAnswer();
+    await this.typeAnswer(mainAnswer);
+  }
+
+  /**
+   * Type an incorrect final word/answer (not matching the correct answer)
+   */
+  async typeIncorrectFinalWord(): Promise<void> {
+    // Wait for boxes to be ready and visible
+    await this.waitForBoxesReady();
+    // Focus the component first
+    await this.focusFinalAnswer();
+    // Wait longer to ensure focus is established and component is interactive
+    await this.page.waitForTimeout(500);
+    // Type a 12-character wrong answer
+    const wrongAnswer = 'WRONGANSWERS'; // Exactly 12 characters
+    for (const char of wrongAnswer) {
+      await this.page.keyboard.type(char);
+      await this.page.waitForTimeout(50);
+    }
+    // Wait for all characters to be processed
+    await this.page.waitForTimeout(200);
+    // Verify all characters were entered
+    const content = await this.getAllBoxContents();
+    if (content.length !== 12) {
+      throw new Error(`Failed to enter all 12 characters. Only ${content.length} characters entered: "${content}"`);
+    }
+  }
+
+  /**
+   * Submit the final answer (alias for compatibility with tests)
+   */
+  async submitFinalAnswer(): Promise<void> {
+    await this.clickSubmit();
+  }
 }

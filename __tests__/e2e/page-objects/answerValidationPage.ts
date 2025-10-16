@@ -33,7 +33,8 @@ export class AnswerValidationPage extends BasePage {
    */
   async submitAnswerViaButton(answer: string): Promise<void> {
     await this.answerInput.fill(answer);
-    await this.verifyButton.click();
+    // Use force: true to handle cases where overlays might intercept clicks
+    await this.verifyButton.click({ force: true });
   }
 
   /**
@@ -147,6 +148,16 @@ export class AnswerValidationPage extends BasePage {
   async submitCorrectAnswer(): Promise<void> {
     const correctAnswer = await this.getCorrectAnswer();
     await this.submitAnswerViaButton(correctAnswer);
+  }
+
+  /**
+   * Submit an incorrect answer for the current question
+   */
+  async submitIncorrectAnswer(): Promise<void> {
+    const correctAnswer = await this.getCorrectAnswer();
+    // Generate an incorrect answer by appending "WRONG" to ensure it doesn't match
+    const incorrectAnswer = correctAnswer + 'WRONG';
+    await this.submitAnswerViaButton(incorrectAnswer);
   }
 
   /**

@@ -43,10 +43,12 @@ TypeScript 5.x with Next.js 14+ (App Router): Follow standard conventions
 │   │   │   ├── gamePage.ts
 │   │   │   ├── navigationPage.ts
 │   │   │   └── timerPage.ts
+│   │   ├── scoring-system.spec.ts
 │   │   ├── sequential-navigation.spec.ts
 │   │   ├── start-game.spec.ts
 │   │   ├── stop-game.spec.ts
 │   │   ├── timer-display.spec.ts
+│   │   ├── timer-early-transition.spec.ts
 │   │   ├── timer-game-end.spec.ts
 │   │   ├── timer-phase-transition.spec.ts
 │   │   └── timer-urgency.spec.ts
@@ -54,6 +56,7 @@ TypeScript 5.x with Next.js 14+ (App Router): Follow standard conventions
 │       ├── finalAnswerValidation.test.ts
 │       ├── gameLogic.test.ts
 │       ├── navigationLogic.test.ts
+│       ├── scoringLogic.test.ts
 │       ├── timerLogic.test.ts
 │       └── validationLogic.test.ts
 ├── app
@@ -66,6 +69,7 @@ TypeScript 5.x with Next.js 14+ (App Router): Follow standard conventions
 │   │   ├── NavigationChevrons.tsx
 │   │   ├── QuestionDisplay.tsx
 │   │   ├── QuestionGrid.tsx
+│   │   ├── ScorePanel.tsx
 │   │   └── TimerPanel.tsx
 │   ├── error.tsx
 │   ├── globals.css
@@ -79,6 +83,7 @@ TypeScript 5.x with Next.js 14+ (App Router): Follow standard conventions
 │   ├── gameLogic.ts
 │   ├── navigationLogic.ts
 │   ├── questionSets.ts
+│   ├── scoringLogic.ts
 │   ├── timerLogic.ts
 │   ├── types.ts
 │   └── validationLogic.ts
@@ -153,20 +158,31 @@ TypeScript 5.x with Next.js 14+ (App Router): Follow standard conventions
 │   │   ├── research.md
 │   │   ├── spec.md
 │   │   └── tasks.md
-│   └── 006-add-time-limit
+│   ├── 006-add-time-limit
+│   │   ├── checklists
+│   │   │   └── requirements.md
+│   │   ├── contracts
+│   │   │   └── README.md
+│   │   ├── data-model.md
+│   │   ├── plan.md
+│   │   ├── quickstart.md
+│   │   ├── research.md
+│   │   ├── spec.md
+│   │   └── tasks.md
+│   └── 007-implement-scoring-system
 │       ├── checklists
 │       │   └── requirements.md
 │       ├── contracts
 │       │   └── README.md
-│       ├── data-model.md
 │       ├── plan.md
 │       ├── quickstart.md
 │       ├── research.md
 │       ├── spec.md
 │       └── tasks.md
 ├── tailwind.config.ts
-└── tsconfig.json
+├── tsconfig.json
+└── tsconfig.tsbuildinfo
 
-30 directories, 113 files
+33 directories, 126 files
 ```
 <!-- MANUAL ADDITIONS END -->

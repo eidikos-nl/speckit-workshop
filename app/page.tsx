@@ -20,6 +20,8 @@ export default function Home() {
       isTimerStopped: false,
       phase: GamePhase.EXPLORATION,
     },
+    currentScore: 0,
+    isFailed: false,
   });
 
   const [questionSets, setQuestionSets] = useState<QuestionSet[]>([]);
@@ -61,6 +63,8 @@ export default function Home() {
           isTimerStopped: false,
           phase: GamePhase.EXPLORATION,
         },
+        currentScore: 0,
+        isFailed: false,
       });
       setError(null);
     } catch (err) {
@@ -82,6 +86,8 @@ export default function Home() {
         isTimerStopped: false,
         phase: GamePhase.EXPLORATION,
       },
+      currentScore: 0,
+      isFailed: false,
     });
   };
 

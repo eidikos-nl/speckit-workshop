@@ -14,6 +14,8 @@ interface FinalAnswerInputProps {
   gameEnded?: boolean;
   /** The result of the final answer submission (for displaying win/loss state) */
   gameResult?: GameResult | null;
+  /** Current score value for display in success message */
+  currentScore?: number;
 }
 
 /**
@@ -36,6 +38,7 @@ export function FinalAnswerInput({
   onSubmit,
   gameEnded = false,
   gameResult = null,
+  currentScore = 0,
 }: FinalAnswerInputProps) {
   // Track local focus/position state for active box indicator
   const [focusPosition, setFocusPosition] = useState<number | null>(null);
@@ -203,6 +206,14 @@ export function FinalAnswerInput({
               ? `Congratulations! You solved the puzzle with the word: ${gameResult.playerAnswer.toUpperCase()}`
               : 'That is incorrect, try again in a new game'}
           </div>
+          {isWin && (
+            <div
+              data-testid="final-score-display"
+              className="text-md text-gray-600"
+            >
+              Your final score: <span className="font-bold text-game-primary">{currentScore}</span>
+            </div>
+          )}
         </div>
       )}
     </div>

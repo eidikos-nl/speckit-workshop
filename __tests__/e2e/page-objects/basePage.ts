@@ -90,4 +90,23 @@ export class BasePage {
     await this.stopButton.waitFor({ state: 'visible' });
     await this.themeDisplay.waitFor({ state: 'visible' });
   }
+
+  /**
+   * Navigate to the next question using the next chevron
+   */
+  async navigateToNextQuestion(): Promise<void> {
+    const nextChevron = this.page.getByTestId('next-chevron');
+    // Use force to handle edge cases where phase transitions might disable navigation
+    await nextChevron.click({ force: true });
+    await this.page.waitForTimeout(100);
+  }
+
+  /**
+   * Navigate to the previous question using the previous chevron
+   */
+  async navigateToPreviousQuestion(): Promise<void> {
+    const prevChevron = this.page.getByTestId('previous-chevron');
+    await prevChevron.click();
+    await this.page.waitForTimeout(100);
+  }
 }

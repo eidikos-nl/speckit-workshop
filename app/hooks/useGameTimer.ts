@@ -138,18 +138,21 @@ export function useGameTimer(
         const newMainRemaining = prev.finalTimerStarted !== null 
           ? prev.mainTimeRemaining // Freeze main timer if final timer has started
           : calculateRemaining(prev.mainTimerStarted, mainDuration, now);
+        
+        // Determine if we need to start the final timer (when main timer reaches 0)
+        const newFinalTimerStarted = newMainRemaining === 0 && prev.finalTimerStarted === null ? now : prev.finalTimerStarted;
+        
         let newFinalRemaining = prev.finalTimeRemaining;
-
         // If final timer has started (either by main expiry or early transition), calculate final remaining time
-        if (prev.finalTimerStarted) {
-          newFinalRemaining = calculateRemaining(prev.finalTimerStarted, finalDuration, now);
+        if (newFinalTimerStarted) {
+          newFinalRemaining = calculateRemaining(newFinalTimerStarted, finalDuration, now);
         }
 
         const newPhase = determinePhase({
           mainTimeRemaining: newMainRemaining,
           finalTimeRemaining: newFinalRemaining,
           mainTimerStarted: prev.mainTimerStarted,
-          finalTimerStarted: prev.finalTimerStarted,
+          finalTimerStarted: newFinalTimerStarted,
           isTimerStopped: prev.isTimerStopped,
           phase: prev.phase,
         });
@@ -176,8 +179,7 @@ export function useGameTimer(
           ...prev,
           mainTimeRemaining: newMainRemaining,
           finalTimeRemaining: newFinalRemaining,
-          // Set finalTimerStarted when main timer reaches 0 (if not already started)
-          finalTimerStarted: newMainRemaining === 0 && prev.finalTimerStarted === null ? now : prev.finalTimerStarted,
+          finalTimerStarted: newFinalTimerStarted,
           phase: newPhase,
         };
       });

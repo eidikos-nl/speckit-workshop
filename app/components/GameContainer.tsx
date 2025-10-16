@@ -102,10 +102,8 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
     const { targetWord } = gameSession.selectedQuestionSet;
     const result = validateFinalAnswer(finalAnswer, targetWord);
 
-    // T052-T053: Stop timer when correct answer is submitted
-    if (result.outcome === 'win') {
-      timerState.stopTimer();
-    }
+    // T052-T053: Stop timer when final answer is submitted (both correct and incorrect)
+    timerState.stopTimer();
 
     setGameResult(result);
     setGameEnded(true);

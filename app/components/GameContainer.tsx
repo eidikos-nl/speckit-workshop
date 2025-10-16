@@ -20,28 +20,28 @@ interface GameContainerProps {
  * This is the main orchestrator for the question navigation feature
  */
 export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
-  // T019: Navigation state management using useState
+  // Navigation state management using useState
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
-  // T006: Track which questions have been correctly answered
+  // Track which questions have been correctly answered
   // Uses Set<string> where each element is a question ID
   const [answeredQuestions, setAnsweredQuestions] = useState<Set<string>>(new Set());
 
-  // T009: Manage collected letters state - tracks letters revealed by correct answers
+  // Manage collected letters state - tracks letters revealed by correct answers
   const [collectedLetters, setCollectedLetters] = useState<CollectedLetters>(
     gameSession.collectedLetters
   );
 
-  // T007: Track the final answer value (12-character string for final submission)
+  // Track the final answer value (12-character string for final submission)
   const [finalAnswer, setFinalAnswer] = useState<string>('');
 
-  // T008: Track whether the game has ended (after final answer submission)
+  // Track whether the game has ended (after final answer submission)
   const [gameEnded, setGameEnded] = useState<boolean>(false);
 
-  // T009: Track the result of the final answer submission (win/loss outcome)
+  // Track the result of the final answer submission (win/loss outcome)
   const [gameResult, setGameResult] = useState<GameResult | null>(null);
 
-  // T045-T048: Callback when final timer expires - set game result to loss
+  // Callback when final timer expires - set game result to loss
   const handleFinalTimerExpire = useCallback(() => {
     if (!gameSession.selectedQuestionSet || gameEnded) {
       return;
@@ -49,7 +49,7 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
 
     const { targetWord } = gameSession.selectedQuestionSet;
 
-    // T046: Set game result to loss with correct answer and incomplete player answer
+    // Set game result to loss with correct answer and incomplete player answer
     setGameResult({
       outcome: 'loss',
       correctAnswer: targetWord,
@@ -57,20 +57,20 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
       timestamp: new Date().toISOString(),
     });
 
-    // T047: Set gameEnded to true to prevent further gameplay
+    // Set gameEnded to true to prevent further gameplay
     setGameEnded(true);
   }, [gameSession.selectedQuestionSet, gameEnded, finalAnswer]);
 
-  // T010-T015: Initialize timer with main 600s (10 minutes) and final 120s (2 minutes)
-  // T022: Initialize with EXPLORATION phase and full durations
+  // Initialize timer with main 600s (10 minutes) and final 120s (2 minutes)
+  // Initialize with EXPLORATION phase and full durations
   const timerState = useGameTimer(
     600, // main duration
     120, // final duration
-    // T014: Callback when main timer expires - phase transition handled by hook
+    // Callback when main timer expires - phase transition handled by hook
     useCallback(() => {
       // No additional action needed - hook handles phase transition
     }, []),
-    // T014: Callback when final timer expires
+    // Callback when final timer expires
     handleFinalTimerExpire
   );
 
@@ -87,11 +87,11 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
   const canGoNext = canNavigateNext(currentQuestionIndex, totalQuestions);
   const canGoPrevious = canNavigatePrevious(currentQuestionIndex);
 
-  // T026-T027: Disable navigation during FINAL_ANSWER phase
+   // Disable navigation during FINAL_ANSWER phase
   const isNavigationDisabled = timerState.phase !== 'exploration';
   const displayOpacity = timerState.phase === 'final_answer' ? 0.2 : 1;
 
-  // T013: Handler for final answer submission
+  // Handler for final answer submission
   // Validates the submitted answer, determines win/loss outcome, and ends the game
   // Includes submission guard to prevent duplicate clicks
   const handleFinalAnswerSubmit = () => {
@@ -102,14 +102,14 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
     const { targetWord } = gameSession.selectedQuestionSet;
     const result = validateFinalAnswer(finalAnswer, targetWord);
 
-    // T052-T053: Stop timer when final answer is submitted (both correct and incorrect)
+    // Stop timer when final answer is submitted (both correct and incorrect)
     timerState.stopTimer();
 
     setGameResult(result);
     setGameEnded(true);
   };
 
-  // T020: Navigation handlers
+   // Navigation handlers
   const handleNext = () => {
     if (canGoNext) {
       setCurrentQuestionIndex(prev => prev + 1);
@@ -122,24 +122,24 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
     }
   };
 
-  // T034: Handler for direct question selection via grid
+  // Handler for direct question selection via grid
   const handleSelectQuestion = (index: number) => {
     if (index >= 0 && index < totalQuestions) {
       setCurrentQuestionIndex(index);
     }
   };
 
-  // T007: Handler for answer submission
+  // Handler for answer submission
   // Validates the submitted answer against the correct answer
   // Returns true if correct, false if incorrect
   // Updates answeredQuestions state if answer is correct
-  // T008: Collects letter when answer is correct
+  // Collects letter when answer is correct
   const handleAnswerSubmit = (answer: string): boolean => {
     const validationResult = validateAnswer(answer, currentQuestion.answer);
     if (validationResult.isCorrect) {
       // Add question ID to answered questions set
       setAnsweredQuestions(prev => new Set(prev).add(currentQuestion.id));
-      // T008: Update collected letters with the revealed letter for this question
+      // Update collected letters with the revealed letter for this question
       // Question index is 0-based, but letter positions are 1-12
       const questionPosition = currentQuestionIndex + 1;
       setCollectedLetters(prev => ({
@@ -179,7 +179,7 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
       {/* Question Number with Chevrons beside it */}
       <div className="flex items-center justify-center gap-4 py-4">
         {/* Previous chevron button */}
-        {/* T027: Disable when phase !== EXPLORATION */}
+        {/* Disable when phase !== EXPLORATION */}
         <button
           onClick={handlePrevious}
           disabled={!canGoPrevious || isNavigationDisabled}
@@ -207,7 +207,7 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
         </p>
 
         {/* Next chevron button */}
-        {/* T027: Disable when phase !== EXPLORATION */}
+        {/* Disable when phase !== EXPLORATION */}
         <button
           onClick={handleNext}
           disabled={!canGoNext || isNavigationDisabled}
@@ -227,10 +227,10 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
         </button>
       </div>
 
-      {/* T021: QuestionDisplay integrated to show current question */}
-      {/* T046: Key prop ensures input clears on navigation */}
-      {/* T012: Pass handleAnswerSubmit callback to QuestionDisplay */}
-      {/* T029: Apply opacity based on phase */}
+      {/* QuestionDisplay integrated to show current question */}
+      {/* Key prop ensures input clears on navigation */}
+      {/* Pass handleAnswerSubmit callback to QuestionDisplay */}
+      {/* Apply opacity based on phase */}
       <div style={{ opacity: displayOpacity, pointerEvents: isNavigationDisabled ? 'none' : 'auto' }}>
         <QuestionDisplay
           key={currentQuestionIndex}
@@ -241,10 +241,10 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
         />
       </div>
 
-      {/* T034: QuestionGrid integrated with onSelectQuestion handler - moved below answer input */}
-      {/* T013: Pass answeredQuestions state to QuestionGrid */}
-      {/* T011: Pass collectedLetters to QuestionGrid for display */}
-      {/* T032: Apply opacity based on phase */}
+      {/* QuestionGrid integrated with onSelectQuestion handler - moved below answer input */}
+      {/* Pass answeredQuestions state to QuestionGrid */}
+      {/* Pass collectedLetters to QuestionGrid for display */}
+      {/* Apply opacity based on phase */}
       <div style={{ opacity: displayOpacity, pointerEvents: isNavigationDisabled ? 'none' : 'auto' }}>
         <QuestionGrid
           currentQuestionIndex={currentQuestionIndex}
@@ -256,12 +256,12 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
         />
       </div>
 
-      {/* T031: Add subtle visual spacer between QuestionGrid and FinalAnswerInput */}
+      {/* Add subtle visual spacer between QuestionGrid and FinalAnswerInput */}
       <div className="border-t border-gray-200 py-6"></div>
 
-      {/* T018: Integrate FinalAnswerInput below QuestionGrid */}
-      {/* T014-T017: FinalAnswerInput handles win/loss visual feedback and messaging */}
-      {/* T032: FinalAnswerInput uses identical styling to QuestionGrid (aspect-square, rounded-lg, border-2, transitions) */}
+      {/* Integrate FinalAnswerInput below QuestionGrid */}
+      {/* FinalAnswerInput handles win/loss visual feedback and messaging */}
+      {/* FinalAnswerInput uses identical styling to QuestionGrid (aspect-square, rounded-lg, border-2, transitions) */}
       <FinalAnswerInput
         value={finalAnswer}
         onChange={setFinalAnswer}
@@ -270,7 +270,7 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
         gameResult={gameResult}
       />
 
-      {/* T016-T021: Integrate TimerPanel component with timer state */}
+      {/* Integrate TimerPanel component with timer state */}
       <TimerPanel
         mainTimeRemaining={timerState.mainTimeRemaining}
         finalTimeRemaining={timerState.finalTimeRemaining}

@@ -34,7 +34,7 @@ export function useGameTimer(
   onMainTimerExpire?: () => void,
   onFinalTimerExpire?: () => void
 ): UseGameTimerReturn {
-  // T010: Initialize timer state with EXPLORATION phase and full durations
+  // Initialize timer state with EXPLORATION phase and full durations
   const [timerState, setTimerState] = useState<TimerState>({
     mainTimeRemaining: mainDuration,
     finalTimeRemaining: finalDuration,
@@ -44,7 +44,7 @@ export function useGameTimer(
     phase: GamePhase.EXPLORATION,
   });
 
-  // Track interval ID for cleanup (T013)
+  // Track interval ID for cleanup
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Track whether main timer expiry has been handled (prevent multiple calls)
@@ -53,7 +53,7 @@ export function useGameTimer(
   // Track whether final timer expiry has been handled (prevent multiple calls)
   const finalTimerExpiredRef = useRef(false);
 
-  // T015: Function to stop both timers (freeze at current values)
+  // Function to stop both timers (freeze at current values)
   const stopTimer = useCallback(() => {
     setTimerState(prev => ({
       ...prev,
@@ -62,7 +62,7 @@ export function useGameTimer(
     }));
   }, []);
 
-  // T012: Page Visibility API integration for tab focus/blur handling
+  // Page Visibility API integration for tab focus/blur handling
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
@@ -98,7 +98,7 @@ export function useGameTimer(
     };
   }, [mainDuration, finalDuration]);
 
-  // T011: Main countdown logic with 1000ms updates
+  // Main countdown logic with 1000ms updates
   useEffect(() => {
     if (timerState.isTimerStopped) {
       // Don't update if timer is stopped
@@ -131,7 +131,7 @@ export function useGameTimer(
           phase: prev.phase,
         });
 
-        // T014: Handle main timer expiration (transition to FINAL_ANSWER phase)
+        // Handle main timer expiration (transition to FINAL_ANSWER phase)
         if (newMainRemaining === 0 && !mainTimerExpiredRef.current && prev.finalTimerStarted === null) {
           mainTimerExpiredRef.current = true;
           // Trigger main timer expiration callback
@@ -160,7 +160,7 @@ export function useGameTimer(
       });
     }, 1000);
 
-    // T013: Cleanup function - clear interval on unmount or when timer stops
+    // Cleanup function - clear interval on unmount or when timer stops
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);

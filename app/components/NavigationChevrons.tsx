@@ -14,10 +14,10 @@ interface NavigationChevronsProps {
   /** Callback when user clicks "Previous" */
   onPrevious: () => void;
 
-  /** T010: Collection of revealed letters for each question position (1-12) */
+  /** Collection of revealed letters for each question position (1-12) */
   collectedLetters?: CollectedLetters;
 
-  /** T010: Current question number (1-12) for display */
+  /** Current question number (1-12) for display */
   currentQuestionNumber?: number;
 }
 

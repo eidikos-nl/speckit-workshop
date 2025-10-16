@@ -37,33 +37,33 @@ export function FinalAnswerInput({
   gameEnded = false,
   gameResult = null,
 }: FinalAnswerInputProps) {
-  // T025: Track local focus/position state for active box indicator
+  // Track local focus/position state for active box indicator
   const [focusPosition, setFocusPosition] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   // Track whether the component has focus to prevent capturing keyboard input globally
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
-  // T021: Handle keyboard input for letter entry
+  // Handle keyboard input for letter entry
   useEffect(() => {
     if (gameEnded || !isFocused) {
-      return; // T030: Disable input handling when game has ended or component is not focused
+      return; // Disable input handling when game has ended or component is not focused
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      // T022: Filter input to accept only A-Z characters, convert to uppercase
+      // Filter input to accept only A-Z characters, convert to uppercase
       if (e.key.length === 1 && /^[a-zA-Z]$/.test(e.key)) {
         e.preventDefault();
-        // T023: Enforce 12-character maximum length
+        // Enforce 12-character maximum length
         if (value.length < 12) {
           const newValue = value + e.key.toUpperCase();
           onChange(newValue);
-          // T026: Move focus right as letters are added
+          // Move focus right as letters are added
           setFocusPosition(newValue.length - 1);
         }
         return;
       }
 
-      // T024: Handle backspace to remove last character
+      // Handle backspace to remove last character
       if (e.key === 'Backspace') {
         e.preventDefault();
         if (value.length > 0) {
@@ -74,7 +74,7 @@ export function FinalAnswerInput({
         return;
       }
 
-      // T029: Enter key handler to trigger submission when 12 characters present
+      // Enter key handler to trigger submission when 12 characters present
       if (e.key === 'Enter' && value.length === 12) {
         e.preventDefault();
         onSubmit();
@@ -127,11 +127,11 @@ export function FinalAnswerInput({
         {Array.from({ length: 12 }).map((_, index) => {
           const letter = value[index] ?? '';
           const isAnswered = letter !== '';
-          const isActive = focusPosition === index; // T027: Check if box has active cursor indicator
+          const isActive = focusPosition === index; // Check if box has active cursor indicator
 
           // Determine box styling based on game state
-          // T035: Add smooth color transition animations using transition-colors duration-300
-          // T036: Add focus indicators with ring utilities
+          // Add smooth color transition animations using transition-colors duration-300
+          // Add focus indicators with ring utilities
           let boxClasses = 'aspect-square rounded-lg border-2 border-gray-300 flex items-center justify-center font-bold text-xl transition-colors duration-300 relative cursor-pointer';
 
           if (gameEnded && gameResult) {
@@ -143,7 +143,7 @@ export function FinalAnswerInput({
             boxClasses += ' bg-white text-gray-700 hover:border-game-primary';
           }
 
-          // T027: Add focus ring styling for active box indicator
+          // Add focus ring styling for active box indicator
           if (isActive && !gameEnded) {
             boxClasses += ' ring-2 ring-game-primary ring-offset-2';
           }
@@ -153,17 +153,17 @@ export function FinalAnswerInput({
               key={index}
               className={boxClasses}
               data-testid={`final-answer-box-${index + 1}`}
-              // T037: Add ARIA labels describing position and state for accessibility
+               // Add ARIA labels describing position and state for accessibility
               aria-label={`Final answer box ${index + 1}${letter ? ` containing letter ${letter}` : ''}${isActive ? ', currently focused' : ''}${gameEnded ? (isWin ? ', answered correctly' : ', answered incorrectly') : ''}`}
               tabIndex={0}
               role="textbox"
               aria-readonly={gameEnded}
             >
               {letter}
-              {/* T027: Visual cursor indicator in active box */}
+              {/* Visual cursor indicator in active box */}
               {isActive && !gameEnded && !letter && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  {/* T038: Optional blinking cursor animation using animate-pulse */}
+                  {/* Optional blinking cursor animation using animate-pulse */}
                   <div className="w-0.5 h-6 bg-game-primary animate-pulse"></div>
                 </div>
               )}
@@ -179,7 +179,7 @@ export function FinalAnswerInput({
             onClick={onSubmit}
             disabled={!isComplete}
             data-testid="final-answer-submit"
-            // T039: Verify all interactive elements have appropriate hover states
+             // Verify all interactive elements have appropriate hover states
             className={`px-6 py-2 rounded-lg font-semibold transition-all duration-200 ${
               isComplete
                 ? 'bg-game-primary text-white hover:bg-game-primary/80 cursor-pointer shadow-md hover:shadow-lg active:shadow-md active:translate-y-0.5'

@@ -32,7 +32,7 @@ export function TimerPanel({
   finalTimeRemaining,
   phase,
 }: TimerPanelProps) {
-  // T038-T041: Determine styling based on phase and urgency
+   // Determine styling based on phase and urgency
   const mainTimerIsActive = phase === GamePhase.EXPLORATION;
   const finalTimerIsActive = phase === GamePhase.FINAL_ANSWER;
 
@@ -58,7 +58,7 @@ export function TimerPanel({
   );
 
   return (
-    // T016: Fixed positioning with bottom-right placement and high z-index
+     // Fixed positioning with bottom-right placement and high z-index
     <div
       className="fixed bottom-4 right-4 z-50 bg-white rounded-lg shadow-lg p-4 min-w-[120px]"
       data-testid="timer-panel"
@@ -67,7 +67,7 @@ export function TimerPanel({
     >
       <div className="space-y-3 text-center">
         {/* Main Timer Display */}
-        {/* T017-T019: Main timer with data-testid for E2E testing */}
+         {/* Main timer with data-testid for E2E testing */}
         <div
           className="flex flex-col items-center"
           data-testid="main-timer-display"
@@ -84,7 +84,7 @@ export function TimerPanel({
         <div className="border-t border-gray-300"></div>
 
         {/* Final Timer Display */}
-        {/* T017-T019: Final timer with data-testid for E2E testing */}
+         {/* Final timer with data-testid for E2E testing */}
         <div
           className="flex flex-col items-center"
           data-testid="final-timer-display"

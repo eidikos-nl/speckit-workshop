@@ -13,7 +13,7 @@ interface QuestionDisplayProps {
   /** Total questions for "Question X of Y" display */
   totalQuestions: number;
 
-  /** T009: Callback function for answer submission
+  /** Callback function for answer submission
    * @param answer - The submitted answer string
    * @returns true if answer is correct, false if incorrect
    */
@@ -22,41 +22,41 @@ interface QuestionDisplayProps {
 
 /**
  * QuestionDisplay component shows the current question text and number
- * T008: Local state for input value and validation feedback
- * T010: Implements Enter key handler for answer submission
- * T011: Implements button click handler for answer submission
- * T018: Shows "That is incorrect" feedback for wrong answers
+ * Local state for input value and validation feedback
+ * Implements Enter key handler for answer submission
+ * Implements button click handler for answer submission
+ * Shows "That is incorrect" feedback for wrong answers
  */
 export function QuestionDisplay({
   question,
   onAnswerSubmit,
 }: QuestionDisplayProps) {
-  // T008: Local state for the input field value
+  // Local state for the input field value
   const [inputValue, setInputValue] = useState('');
 
-  // T008: Local state for validation feedback text
+  // Local state for validation feedback text
   const [feedbackText, setFeedbackText] = useState('');
 
   // Track whether the last answer was correct (for styling)
   const [wasCorrect, setWasCorrect] = useState(false);
 
-  // T011: Handle submit button click
+  // Handle submit button click
   const handleSubmit = () => {
     if (!onAnswerSubmit) return;
 
     const isCorrect = onAnswerSubmit(inputValue);
     if (!isCorrect) {
-      // T018: Display "That is incorrect" for wrong answers
+       // Display "That is incorrect" for wrong answers
       setFeedbackText('That is incorrect');
       setWasCorrect(false);
     } else {
-      // T018: Display "That is correct" in green for correct answers
+       // Display "That is correct" in green for correct answers
       setFeedbackText('That is correct');
       setWasCorrect(true);
     }
   };
 
-  // T010: Handle Enter key press
+  // Handle Enter key press
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -64,7 +64,7 @@ export function QuestionDisplay({
     }
   };
 
-  // T019: Clear feedback when input changes
+  // Clear feedback when input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     setFeedbackText(''); // Clear feedback on input change
@@ -110,7 +110,7 @@ export function QuestionDisplay({
         </button>
       </div>
 
-      {/* T020: Validation feedback text */}
+       {/* Validation feedback text */}
       <div className="text-center">
         <p
           className={`text-sm ${

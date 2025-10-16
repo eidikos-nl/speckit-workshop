@@ -13,21 +13,21 @@ interface QuestionGridProps {
   /** Callback when user clicks a square */
   onSelectQuestion: (index: number) => void;
 
-  /** T013: Set of answered question IDs for visual feedback (kept for backwards compatibility) */
+  /** Set of answered question IDs for visual feedback (kept for backwards compatibility) */
   answeredQuestions?: Set<string>;
 
   /** The array of questions for checking answered status (kept for backwards compatibility) */
   questions?: Question[];
 
-  /** T011: Collection of revealed letters for each question position (1-12) */
+  /** Collection of revealed letters for each question position (1-12) */
   collectedLetters?: CollectedLetters;
 }
 
 /**
  * QuestionGrid component displays 12 clickable squares for direct question navigation
  * Each square represents one question with visual indication of the current question
- * T014: Shows green background for answered questions
- * T016: Applies success pulse animation to answered questions
+ * Shows green background for answered questions
+ * Applies success pulse animation to answered questions
  */
 export function QuestionGrid({
   currentQuestionIndex,
@@ -48,20 +48,20 @@ export function QuestionGrid({
         </p>
       </div>
       
-      {/* T032: Responsive grid layout (1×12 desktop, wrapped on mobile) */}
+       {/* Responsive grid layout (1×12 desktop, wrapped on mobile) */}
       <div
         className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-12 gap-3 sm:gap-4 md:gap-6"
         role="group"
         aria-label="Revealed letters for the target word"
       >
         {Array.from({ length: totalQuestions }, (_, index) => {
-          // T031: Active square highlighting logic
+           // Active square highlighting logic
           const isActive = index === currentQuestionIndex;
           const displayNumber = index + 1; // 1-indexed for aria-label
 
-          // T011: Get display letter - either the collected letter or "." for unanswered
+           // Get display letter - either the collected letter or "." for unanswered
           const displayLetter = getDisplayLetter(displayNumber, collectedLetters);
-          // T013: Check if answered using collected letters (same as isAnswered, but from collected letters)
+           // Check if answered using collected letters (same as isAnswered, but from collected letters)
           const isLetterCollected = isAnsweredCorrectly(displayNumber, collectedLetters);
 
           return (
@@ -78,14 +78,14 @@ export function QuestionGrid({
               }`}
               aria-current={isActive ? 'true' : 'false'}
               className={clsx(
-                // T035: CSS transitions for smooth active square highlight changes
+                 // CSS transitions for smooth active square highlight changes
                 'aspect-square rounded-lg font-bold text-2xl min-h-[50px]',
                 'transition-all duration-300 ease-in-out',
                 'hover:scale-105 active:scale-95',
                 'focus:outline-none focus:ring-2 focus:ring-offset-2',
                 'flex items-center justify-center',
                 {
-                  // T014: Answered state - green background with success animation
+                   // Answered state - green background with success animation
                   // Shows green even if this is the current question
                   'bg-green-500 border-green-600 border-2 text-white shadow-lg animate-success-pulse': isLetterCollected,
                   'focus:ring-green-500': isLetterCollected,
@@ -100,7 +100,7 @@ export function QuestionGrid({
                 }
               )}
             >
-              {/* T011: Display the letter or period */}
+               {/* Display the letter or period */}
               <span>{displayLetter}</span>
             </button>
           );

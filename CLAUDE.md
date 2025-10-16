@@ -18,7 +18,7 @@ npm test [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES][ONLY COMMANDS FOR ACTIVE TECHNO
 TypeScript 5.x with Next.js 14+ (App Router): Follow standard conventions
 
 ## Recent Changes
-- 001-initialize-game-i: Added TypeScript 5.x with Next.js 14+ (App Router)
+- 006-add-time-limit Added time tracking
 
 <!-- MANUAL ADDITIONS START -->
 ```

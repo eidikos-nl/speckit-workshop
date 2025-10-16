@@ -65,6 +65,7 @@ export const calculateRemaining = (
  *
  * Phase transition logic:
  * - If isTimerStopped: return ENDED (terminal state)
+ * - If finalTimerStarted is set: return FINAL_ANSWER (early transition or main timer expired)
  * - If mainTimeRemaining > 0: return EXPLORATION (main timer active)
  * - If finalTimeRemaining > 0: return FINAL_ANSWER (final timer active)
  * - Otherwise: return ENDED (both timers expired)
@@ -74,19 +75,23 @@ export const calculateRemaining = (
  *
  * @example
  * // Exploration phase
- * determinePhase({ mainTimeRemaining: 300, finalTimeRemaining: 120, isTimerStopped: false })
+ * determinePhase({ mainTimeRemaining: 300, finalTimeRemaining: 120, isTimerStopped: false, finalTimerStarted: null })
  * // Returns: GamePhase.EXPLORATION
  *
- * // Final answer phase
- * determinePhase({ mainTimeRemaining: 0, finalTimeRemaining: 60, isTimerStopped: false })
+ * // Final answer phase (early transition with main timer still running)
+ * determinePhase({ mainTimeRemaining: 540, finalTimeRemaining: 120, isTimerStopped: false, finalTimerStarted: 1234567890 })
+ * // Returns: GamePhase.FINAL_ANSWER
+ *
+ * // Final answer phase (main timer expired)
+ * determinePhase({ mainTimeRemaining: 0, finalTimeRemaining: 60, isTimerStopped: false, finalTimerStarted: 1234567890 })
  * // Returns: GamePhase.FINAL_ANSWER
  *
  * // Ended phase (by expiration)
- * determinePhase({ mainTimeRemaining: 0, finalTimeRemaining: 0, isTimerStopped: false })
+ * determinePhase({ mainTimeRemaining: 0, finalTimeRemaining: 0, isTimerStopped: false, finalTimerStarted: 1234567890 })
  * // Returns: GamePhase.ENDED
  *
  * // Ended phase (by successful submission)
- * determinePhase({ mainTimeRemaining: 300, finalTimeRemaining: 120, isTimerStopped: true })
+ * determinePhase({ mainTimeRemaining: 300, finalTimeRemaining: 120, isTimerStopped: true, finalTimerStarted: null })
  * // Returns: GamePhase.ENDED
  */
 export const determinePhase = (timerState: TimerState): GamePhase => {
@@ -94,12 +99,17 @@ export const determinePhase = (timerState: TimerState): GamePhase => {
     return GamePhase.ENDED;
   }
 
-  if (timerState.mainTimeRemaining > 0) {
-    return GamePhase.EXPLORATION;
+  // If final timer has started, we're in FINAL_ANSWER phase (either by early transition or main timer expiry)
+  if (timerState.finalTimerStarted !== null) {
+    // Check if final timer has expired
+    if (timerState.finalTimeRemaining <= 0) {
+      return GamePhase.ENDED;
+    }
+    return GamePhase.FINAL_ANSWER;
   }
 
-  if (timerState.finalTimeRemaining > 0) {
-    return GamePhase.FINAL_ANSWER;
+  if (timerState.mainTimeRemaining > 0) {
+    return GamePhase.EXPLORATION;
   }
 
   return GamePhase.ENDED;

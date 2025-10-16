@@ -99,6 +99,7 @@ When a player successfully submits the correct final answer, both timers immedia
 - What if a player refreshes the page during gameplay? (Answer: Game session is lost and player must restart; timers do not persist across page refreshes)
 - What happens to the final timer display before the main timer expires? (Answer: Final timer shows "2:00" but is inactive/not counting down until main timer reaches zero)
 - Can a player pause the game to stop the timers? (Answer: No pause functionality exists; timers run continuously from game start)
+- What happens if a player answers all 12 questions before the main timer expires? (Answer: The main timer immediately freezes at its current time, the final answer phase begins, and the 2-minute final timer starts counting down from 2:00)
 
 ## Requirements *(mandatory)*
 
@@ -119,6 +120,7 @@ When a player successfully submits the correct final answer, both timers immedia
 - **FR-013**: System MUST display the message "The time is up, you lost!" when the final timer reaches zero without a valid answer being submitted
 - **FR-014**: System MUST stop both timers immediately when a valid final answer is submitted successfully
 - **FR-015**: Timer displays MUST show time in MM:SS format (e.g., "10:00", "2:45", "0:09")
+- **FR-016**: System MUST immediately transition to FINAL_ANSWER phase and freeze the main timer when all 12 individual questions have been answered correctly, starting the 2-minute final timer
 
 ### Key Entities
 
@@ -146,3 +148,4 @@ When a player successfully submits the correct final answer, both timers immedia
 - **SC-005**: Game correctly ends with loss message within 1 second of final timer expiration when no valid answer exists
 - **SC-006**: 100% of successful answer submissions result in immediate timer stoppage
 - **SC-007**: Timer panel remains visible and functional across all game screens and during all player interactions
+- **SC-008**: Game correctly transitions to final answer phase when the 12th question is answered before main timer expiration, freezing remaining main timer time

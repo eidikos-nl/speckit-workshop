@@ -6,10 +6,11 @@ import { calculateRemaining, determinePhase } from '@/lib/timerLogic';
 
 /**
  * Return type for useGameTimer hook
- * Extends TimerState with the stopTimer function
+ * Extends TimerState with the stopTimer and transitionToFinalAnswer functions
  */
 export interface UseGameTimerReturn extends TimerState {
   stopTimer: () => void;
+  transitionToFinalAnswer: () => void;
 }
 
 /**
@@ -62,6 +63,22 @@ export function useGameTimer(
     }));
   }, []);
 
+  // Function to transition to FINAL_ANSWER phase early (when all questions are answered)
+  // Freezes the main timer and starts the final timer
+  const transitionToFinalAnswer = useCallback(() => {
+    setTimerState(prev => {
+      if (prev.finalTimerStarted !== null) {
+        return prev; // Already in final answer phase
+      }
+      const now = Date.now();
+      return {
+        ...prev,
+        finalTimerStarted: now,
+        phase: GamePhase.FINAL_ANSWER,
+      };
+    });
+  }, []);
+
   // Page Visibility API integration for tab focus/blur handling
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -73,7 +90,10 @@ export function useGameTimer(
           }
 
           const now = Date.now();
-          const newMainRemaining = calculateRemaining(prev.mainTimerStarted, mainDuration, now);
+          // When transitioning early (all questions answered), freeze main timer at current value
+          const newMainRemaining = prev.finalTimerStarted !== null
+            ? prev.mainTimeRemaining // Freeze main timer if final timer has started
+            : calculateRemaining(prev.mainTimerStarted, mainDuration, now);
           const newFinalRemaining = prev.finalTimerStarted
             ? calculateRemaining(prev.finalTimerStarted, finalDuration, now)
             : finalDuration;
@@ -114,11 +134,14 @@ export function useGameTimer(
         const now = Date.now();
 
         // Calculate remaining times based on elapsed time from start timestamps
-        const newMainRemaining = calculateRemaining(prev.mainTimerStarted, mainDuration, now);
+        // When transitioning early (all questions answered), freeze main timer at current value
+        const newMainRemaining = prev.finalTimerStarted !== null 
+          ? prev.mainTimeRemaining // Freeze main timer if final timer has started
+          : calculateRemaining(prev.mainTimerStarted, mainDuration, now);
         let newFinalRemaining = prev.finalTimeRemaining;
 
-        // If main timer has expired and final timer started, calculate final remaining time
-        if (newMainRemaining === 0 && prev.finalTimerStarted) {
+        // If final timer has started (either by main expiry or early transition), calculate final remaining time
+        if (prev.finalTimerStarted) {
           newFinalRemaining = calculateRemaining(prev.finalTimerStarted, finalDuration, now);
         }
 
@@ -171,5 +194,6 @@ export function useGameTimer(
   return {
     ...timerState,
     stopTimer,
+    transitionToFinalAnswer,
   };
 }

@@ -134,11 +134,13 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
   // Returns true if correct, false if incorrect
   // Updates answeredQuestions state if answer is correct
   // Collects letter when answer is correct
+  // Transitions to FINAL_ANSWER phase when all 12 questions are answered
   const handleAnswerSubmit = (answer: string): boolean => {
     const validationResult = validateAnswer(answer, currentQuestion.answer);
     if (validationResult.isCorrect) {
       // Add question ID to answered questions set
-      setAnsweredQuestions(prev => new Set(prev).add(currentQuestion.id));
+      const updatedAnsweredQuestions = new Set(answeredQuestions).add(currentQuestion.id);
+      setAnsweredQuestions(updatedAnsweredQuestions);
       // Update collected letters with the revealed letter for this question
       // Question index is 0-based, but letter positions are 1-12
       const questionPosition = currentQuestionIndex + 1;
@@ -146,6 +148,11 @@ export function GameContainer({ gameSession, onStopGame }: GameContainerProps) {
         ...prev,
         [questionPosition]: currentQuestion.revealedLetter,
       }));
+
+      // When all 12 questions are answered, transition to FINAL_ANSWER phase
+      if (updatedAnsweredQuestions.size === 12) {
+        timerState.transitionToFinalAnswer();
+      }
     }
     return validationResult.isCorrect;
   };

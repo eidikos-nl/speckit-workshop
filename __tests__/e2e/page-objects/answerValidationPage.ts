@@ -167,4 +167,40 @@ export class AnswerValidationPage extends BasePage {
 
     return matchingSet.mainAnswer;
   }
+
+  /**
+   * Answer all 12 questions with correct answers and navigate through them
+   * This helper function automatically answers each question and navigates to the next
+   * Used for testing early transition to FINAL_ANSWER phase when all questions are answered
+   */
+  async answerAllQuestions(): Promise<void> {
+    const theme = await this.getTheme();
+    const questionSets = this.loadQuestionSets();
+    const matchingSet = questionSets.find(set => set.theme === theme);
+
+    if (!matchingSet) {
+      throw new Error(`No question set found with theme: ${theme}`);
+    }
+
+    // Answer each of the 12 questions
+    for (let i = 0; i < matchingSet.questions.length; i++) {
+      const question = matchingSet.questions[i];
+      const answer = question.answer;
+
+      // Submit the correct answer
+      await this.submitAnswerViaButton(answer);
+
+      // Wait for feedback to show it was correct
+      await this.page.waitForTimeout(300);
+
+      // Navigate to next question if not the last one
+      if (i < matchingSet.questions.length - 1) {
+        // Use the next chevron to navigate
+        const nextChevron = this.page.getByTestId('next-chevron');
+        await nextChevron.click();
+        // Wait for next question to load
+        await this.page.waitForTimeout(300);
+      }
+    }
+  }
 }
